@@ -1,0 +1,36 @@
+﻿@model List<ResultCategoryDto>
+
+@{
+    ViewData["Title"] = "CategoryList";
+    Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
+}
+
+<div class="col-12 col-md-12 col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="section-title">Kategoriler</div>
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Adı</th>
+                            <th scope="col">Sil</th>
+                            <th scope="col">Güncele</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.CategoryName</td>
+                                <td><a asp-controller="Category" asp-action="CategoryDelete" asp-route-id="@item.CategoryId" class="btn btn-danger btn-sm">Sil</a></td>
+                                <td><a asp-controller="Category" asp-action="CategoryUpdate" asp-route-id="@item.CategoryId" class="btn btn-success btn-sm">Güncelle</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a asp-controller="Admin" asp-action="CategoryCreate" class="btn btn-primary btn-sm">Ekle</a>
+            </div>
+        </div>
+    </div>
+</div>

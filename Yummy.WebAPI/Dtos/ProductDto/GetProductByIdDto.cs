@@ -1,6 +1,4 @@
-﻿using Yummy.WebAPI.Entities;
-
-namespace Yummy.WebAPI.Dtos.ProductDto
+﻿namespace Yummy.WebAPI.Dtos.ProductDto
 {
     public class GetProductByIdDto
     {

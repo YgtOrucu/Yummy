@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Yummy.WebAPI.Context;
 using Yummy.WebAPI.Dtos.MessageDto;
+using Yummy.WebAPI.Dtos.MessageDto.MessageDtoForAdminThema.MessageListForNavbarSection;
 using Yummy.WebAPI.Entities;
 
 namespace Yummy.WebAPI.Controllers
@@ -55,6 +56,12 @@ namespace Yummy.WebAPI.Controllers
         {
             var values = await _yummyContext.Messages.FindAsync(id);
             return Ok(_mapper.Map<GetMessageByIdDto>(values));
+        }
+        [HttpGet("MessageListByIsReadFalse")]
+        public async Task<IActionResult> MessageListByIsReadFalse()
+        {
+            var values = await _yummyContext.Messages.Where(x => !x.IsRead).ToListAsync();
+            return Ok(_mapper.Map<List<MessageListByIsReadFalseDto>>(values));
         }
     }
 }

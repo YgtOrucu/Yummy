@@ -1,0 +1,47 @@
+﻿@model List<MessageListByIsReadFalseDto>
+<li class="dropdown dropdown-list-toggle">
+    <a href="#" data-toggle="dropdown"
+       class="nav-link nav-link-lg message-toggle">
+        <i data-feather="mail"></i>
+        <span class="badge headerBadge1">
+            @Model.Count
+        </span>
+    </a>
+    <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+        <div class="dropdown-header">
+            Mesajlar
+            <div class="float-right">
+                <a href="#">Hepsini Okundu İşaretle</a>
+            </div>
+        </div>
+        <div class="dropdown-list-content dropdown-list-message">
+
+            @foreach (var item in Model)
+            {
+                var colors = new[] { "#6777ef", "#ff6b6b", "#28c76f", "#ffa502", "#00cfe8" };
+                var color = colors[Math.Abs(item.Name.GetHashCode()) % colors.Length];
+                var firstLetter = string.IsNullOrEmpty(item.Name)
+                ? "?"
+                : item.Name.Trim().Substring(0, 1).ToUpper();
+
+                <a href="#" class="dropdown-item">
+                    <span class="dropdown-item-avatar text-white d-flex align-items-center justify-content-center rounded-circle"
+                          style="height:40px;background-color:@color;font-weight:600;">
+                        @firstLetter
+                    </span>
+
+                    <span class="dropdown-item-desc">
+                        <span class="message-user">
+                            @(item.Name)
+                        </span>
+                        <span class="time messege-text">@(item.Subject)</span>
+                        <span class="time">@(item.MessageDate.ToString("dd/MM/yyyy"))</span>
+                    </span>
+                </a>
+            }
+        </div>
+        <div class="dropdown-footer text-center">
+            <a href="#">Hepsini Görüntüle <i class="fas fa-chevron-right"></i></a>
+        </div>
+    </div>
+</li>

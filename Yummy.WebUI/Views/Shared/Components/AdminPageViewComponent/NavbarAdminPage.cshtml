@@ -1,0 +1,11 @@
+﻿<div class="navbar-bg"></div>
+<nav class="navbar navbar-expand-lg main-navbar sticky">
+    @await Component.InvokeAsync("FormInlineInTheNavbarForSection")
+    <ul class="navbar-nav navbar-right">
+
+        @await Component.InvokeAsync("MessageListInTheNavbarForSection")
+
+        @await Component.InvokeAsync("ProfileDropdownInTheNavbarForSection")
+
+    </ul>
+</nav>
