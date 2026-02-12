@@ -21,5 +21,9 @@ namespace Yummy.WebAPI.Context
         public DbSet<Product> Products  { get; set; }
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<Chef> Chefs { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Gallery> Galleries  { get; set; }
+        public DbSet<Contact> Contacts  { get; set; }
+        public DbSet<Message> Messages   { get; set; }
     }
 }

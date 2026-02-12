@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Yummy.WebAPI.Context;
 
@@ -11,9 +12,11 @@ using Yummy.WebAPI.Context;
 namespace Yummy.WebAPI.Migrations
 {
     [DbContext(typeof(YummyContext))]
-    partial class YummyContextModelSnapshot : ModelSnapshot
+    [Migration("20260212064801_AddedNewTableContact")]
+    partial class AddedNewTableContact
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,44 +206,6 @@ namespace Yummy.WebAPI.Migrations
                     b.HasKey("HeroId");
 
                     b.ToTable("Heroes");
-                });
-
-            modelBuilder.Entity("Yummy.WebAPI.Entities.Message", b =>
-                {
-                    b.Property<int>("MessageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MessageId"));
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MessageContent")
-                        .HasMaxLength(1000)
-                        .HasColumnType("varchar");
-
-                    b.Property<DateTime>("MessageDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Subject")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar");
-
-                    b.HasKey("MessageId");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Yummy.WebAPI.Entities.Product", b =>

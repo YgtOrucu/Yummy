@@ -1,0 +1,16 @@
+﻿using FluentValidation;
+using Yummy.WebAPI.Dtos.ContactDto;
+
+namespace Yummy.WebAPI.Validator.ContactValidationRules
+{
+    public class UpdateContactValidation : AbstractValidator<UpdateContactDto>
+    {
+        public UpdateContactValidation()
+        {
+            RuleFor(x => x.Address).NotEmpty().WithMessage("Adres alanı zorunludur.");
+            RuleFor(x => x.OpenHours).NotEmpty().WithMessage("Çalışma Saatleri alanı zorunludur.");
+            RuleFor(x => x.Phone).NotEmpty().WithMessage("Telefon numarası zorunludur.");
+            RuleFor(x => x.Email).EmailAddress().WithMessage("Geçerli bir e-posta giriniz.");
+        }
+    }
+}
