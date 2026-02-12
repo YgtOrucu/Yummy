@@ -1,0 +1,29 @@
+﻿@model GetCategoryByIdDto
+
+@{
+    ViewData["Title"] = "CategoryUpdate";
+    Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
+}
+
+<div class="col-12 col-md-12 col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="section-title">Güncelleme İşlemi</div>
+            <div class="table-responsive">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <form asp-controller="Category" asp-action="CategoryUpdate" method="post">
+                    <input type="hidden" asp-for="CategoryId" />
+                    <label asp-for="CategoryName">Ad</label>
+                    <input type="text" class="form-control" asp-for="CategoryName" />
+                    <span asp-validation-for="CategoryName" class="text-danger"></span>
+                    <br />
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                    <a asp-controller="Category" asp-action="CategoryList" class="btn btn-danger">Geri</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

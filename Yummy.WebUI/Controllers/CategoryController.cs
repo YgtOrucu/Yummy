@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
-using Yummy.WebAPI.Context;
 using Yummy.WebUI.Dtos.CategoryDto;
 
 namespace Yummy.WebUI.Controllers
@@ -9,12 +8,10 @@ namespace Yummy.WebUI.Controllers
     public class CategoryController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly YummyContext _yummyContext;
 
-        public CategoryController(IHttpClientFactory httpClientFactory, YummyContext yummyContext)
+        public CategoryController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
-            _yummyContext = yummyContext;
         }
 
         public async Task<IActionResult> CategoryList()
@@ -47,6 +44,9 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return View(createCategoryDto);
+
                 var client = _httpClientFactory.CreateClient();
                 var JsonData = JsonConvert.SerializeObject(createCategoryDto);
                 var StringContent = new StringContent(JsonData, Encoding.UTF8, "application/json");
@@ -109,6 +109,9 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return View(updateCategoryDto);
+
                 var client = _httpClientFactory.CreateClient();
                 var JsonData = JsonConvert.SerializeObject(updateCategoryDto);
                 var stringContent = new StringContent(JsonData, Encoding.UTF8, "application/json");

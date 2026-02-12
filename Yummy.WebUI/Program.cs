@@ -1,11 +1,14 @@
-using Yummy.WebAPI.Context;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Yummy.WebUI.Validator.MarkerValidationRules;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<YummyContext>();
 builder.Services.AddHttpClient();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<MarkerValidation>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
