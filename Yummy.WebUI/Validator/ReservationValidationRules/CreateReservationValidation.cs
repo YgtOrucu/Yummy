@@ -13,6 +13,8 @@ namespace Yummy.WebUI.Validator.ReservationValidationRules
             RuleFor(x => x.PeopleCount).GreaterThan(0).WithMessage("Kişi sayısı en az 1 olmalıdır.");
             RuleFor(x => x.ReservationDate).NotEmpty().WithMessage("Tarih seçimi zorunludur.");
             RuleFor(x => x.ReservationTime).NotEmpty().WithMessage("Saat seçimi zorunludur.");
+            RuleFor(x => x.Message).NotEmpty().WithMessage("Mesaj alanı boş geçilemez.").
+                MinimumLength(10).WithMessage("Minumum 10 karekterlik bir mesaj yazınız");
         }
     }
 }

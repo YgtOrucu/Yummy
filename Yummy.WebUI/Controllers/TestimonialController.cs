@@ -43,11 +43,11 @@ namespace Yummy.WebUI.Controllers
                 var extension = Path.GetExtension(createTestimonialDto.ImageFile.FileName);
                 var imageName = Guid.NewGuid() + extension;
 
-                var uploadPath = Path.Combine(resource, "wwwroot", "images", "Testimonial");
+                var uploadPath = Path.Combine(resource, "wwwroot", "images", "TestimonialImage");
                 var saveLocation = Path.Combine(uploadPath, imageName);
                 using var stream = new FileStream(saveLocation, FileMode.Create);
                 await createTestimonialDto.ImageFile.CopyToAsync(stream);
-                createTestimonialDto.ImageUrl = "/images/Testimonial/" + imageName;
+                createTestimonialDto.ImageUrl = "/images/TestimonialImage/" + imageName;
             }
 
             var client = _httpClientFactory.CreateClient("YummyClient");

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\Chefs\" />
+    <Folder Include="wwwroot\images\ChefImage\" />
     <Folder Include="wwwroot\images\AboutImage\" />
     <Folder Include="wwwroot\images\HeroImage\" />
     <Folder Include="wwwroot\images\TestimonialImage\" />

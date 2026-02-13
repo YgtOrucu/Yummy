@@ -20,13 +20,23 @@
                     <input type="text" class="form-control" asp-for="Description" />
                     <span asp-validation-for="Description" class="text-danger"></span>
                     <br />
-                    <label asp-for="ImageFileForImageUrl">Resim Seç</label>
+                    <label>Mevcut Resim</label>
+                    <br />
+                    <img src="@Model.ImageUrl" style="width:150px; height:100px; border-radius:10px; border:1px solid #ddd" />
+                    <input type="hidden" asp-for="ImageUrl" />
+                    <br />
+                    <label>Yeni Resim Seç</label>
                     <input type="file" class="form-control" asp-for="ImageFileForImageUrl" />
                     <br />
                     <label asp-for="VideoUrl">VideoUrl</label>
                     <input type="text" class="form-control" asp-for="VideoUrl" />
                     <br />
-                    <label asp-for="ImageFileForVideoCover">Resim Seç (Video Cover)</label>
+                    <label>Mevcut Resim</label>
+                    <br />
+                    <img src="@Model.ImageUrl" style="width:150px; height:100px; border-radius:10px; border:1px solid #ddd" />
+                    <input type="hidden" asp-for="ImageUrl" />
+                    <br />
+                    <label>Yeni Resim Seç (Video Cover)</label>
                     <input type="file" class="form-control" asp-for="ImageFileForVideoCover" />
                     <br />
                     <label asp-for="ReservationNumber">Rezervasyon Numarası</label>
