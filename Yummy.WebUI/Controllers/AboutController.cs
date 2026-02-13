@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json;
-using System.Text;
 using Yummy.WebUI.Dtos.AboutDto;
 
 namespace Yummy.WebUI.Controllers
@@ -19,9 +16,9 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
-                using(var client = _httpClientFactory.CreateClient())
+                using(var client = _httpClientFactory.CreateClient("YummyClient"))
                 {
-                    var responseMessage = await client.GetAsync("https://localhost:7287/api/Abouts");
+                    var responseMessage = await client.GetAsync("Abouts");
 
                     if (responseMessage.IsSuccessStatusCode)
                     {
@@ -76,11 +73,8 @@ namespace Yummy.WebUI.Controllers
                     await createAboutDto.ImageFileForVideoCover.CopyToAsync(stream);
                     createAboutDto.VideoCoverImageUrl = "/images/AboutImage/" + imageName;
                 }
-
-                var client = _httpClientFactory.CreateClient();
-                var JsonData = JsonConvert.SerializeObject(createAboutDto);
-                var stringContent = new StringContent(JsonData, Encoding.UTF8, "application/json");
-                var responseMessage = await client.PostAsync("https://localhost:7287/api/Abouts", stringContent);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.PostAsJsonAsync("Abouts", createAboutDto);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -130,8 +124,8 @@ namespace Yummy.WebUI.Controllers
                     }
                 }
 
-                var client = _httpClientFactory.CreateClient();
-                var responseMessage = await client.DeleteAsync("https://localhost:7287/api/Abouts?id=" + id);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.DeleteAsync("Abouts?id=" + id);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -150,8 +144,8 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
-                var responseMessage = await client.GetAsync("https://localhost:7287/api/Abouts/GetAboutById?id=" + id);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.GetAsync("Abouts/GetAboutById?id=" + id);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -182,7 +176,7 @@ namespace Yummy.WebUI.Controllers
                     var extension = Path.GetExtension(updateAboutDto.ImageFileForImageUrl.FileName);
                     var imageName = Guid.NewGuid() + extension;
 
-                    var uploadPath = Path.Combine(resource, "wwwroot", "images", "ProductImage");
+                    var uploadPath = Path.Combine(resource, "wwwroot", "images", "AboutImage");
                     var saveLocation = Path.Combine(uploadPath, imageName);
 
                     var oldImage = await GetOldImagControlSelectAbout(updateAboutDto.AboutId);
@@ -201,7 +195,7 @@ namespace Yummy.WebUI.Controllers
                     }
                     using var stream = new FileStream(saveLocation, FileMode.Create);
                     await updateAboutDto.ImageFileForImageUrl.CopyToAsync(stream);
-                    updateAboutDto.ImageUrl = "/images/ProductImage/" + imageName;
+                    updateAboutDto.ImageUrl = "/images/AboutImage/" + imageName;
                 }
                 if (updateAboutDto.ImageFileForVideoCover != null)
                 {
@@ -209,7 +203,7 @@ namespace Yummy.WebUI.Controllers
                     var extension = Path.GetExtension(updateAboutDto.ImageFileForVideoCover.FileName);
                     var imageName = Guid.NewGuid() + extension;
 
-                    var uploadPath = Path.Combine(resource, "wwwroot", "images", "ProductImage");
+                    var uploadPath = Path.Combine(resource, "wwwroot", "images", "AboutImage");
                     var saveLocation = Path.Combine(uploadPath, imageName);
 
                     var oldImage = await GetOldImagControlSelectAbout(updateAboutDto.AboutId);
@@ -218,7 +212,7 @@ namespace Yummy.WebUI.Controllers
                         var oldImagePath = Path.Combine(
                             resource,
                             "wwwroot",
-                            oldImage.ImageUrl.TrimStart('/')
+                            oldImage.VideoCoverImageUrl.TrimStart('/')
                         );
 
                         if (System.IO.File.Exists(oldImagePath))
@@ -228,12 +222,10 @@ namespace Yummy.WebUI.Controllers
                     }
                     using var stream = new FileStream(saveLocation, FileMode.Create);
                     await updateAboutDto.ImageFileForVideoCover.CopyToAsync(stream);
-                    updateAboutDto.VideoCoverImageUrl = "/images/ProductImage/" + imageName;
+                    updateAboutDto.VideoCoverImageUrl = "/images/AboutImage/" + imageName;
                 }
-                var client = _httpClientFactory.CreateClient();
-                var JsonData = JsonConvert.SerializeObject(updateAboutDto);
-                var stringContent = new StringContent(JsonData, Encoding.UTF8, "application/json");
-                var responseMessage = await client.PutAsync("https://localhost:7287/api/Abouts", stringContent);
+                var client = _httpClientFactory.CreateClient("YummyClient");  
+                var responseMessage = await client.PutAsJsonAsync("Abouts", updateAboutDto);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -249,8 +241,8 @@ namespace Yummy.WebUI.Controllers
 
         private async Task<GetAboutByIdDto> GetOldImagControlSelectAbout(int aboutıd)
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7287/api/Abouts/GetAboutById?id=" + aboutıd);
+            var client = _httpClientFactory.CreateClient("YummyClient");
+            var responseMessage = await client.GetAsync("Abouts/GetAboutById?id=" + aboutıd);
 
             if (responseMessage.IsSuccessStatusCode)
             {

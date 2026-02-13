@@ -6,7 +6,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("YummyClient", client =>
+{
+    var baseUrl = builder.Configuration.GetSection("ApiSettings")["BaseUrl"];
+    if (string.IsNullOrEmpty(baseUrl))
+        throw new Exception("HATA: appsettings içindeki BaseUrl okunamadý!");
+
+    client.BaseAddress = new Uri(baseUrl);
+});
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<MarkerValidation>();
 var app = builder.Build();

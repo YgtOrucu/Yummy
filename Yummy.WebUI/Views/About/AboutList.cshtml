@@ -26,20 +26,20 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.Title</td>
-                                <td>@(item.Description.Length < 20 ? item.Description : item.Description.Substring(0, 20) + "...")</td>
+                                <td style="align-content:center">@item.Title</td>
+                                <td style="align-content:center">@(item.Description.Length < 20 ? item.Description : item.Description.Substring(0, 20) + "...")</td>
                                 <td>
                                     <img alt="default"
                                          src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/default-150x150.png" : item.ImageUrl)"
                                          style="width: 3rem;height: 3rem;border-radius: 9999px;object-fit: cover;margin-left: auto;margin-right: auto;border: 2px solid #f1f5f9;" />
                                 </td>
-                                <td>@item.VideoUrl</td>
+                                <td style="align-content:center">@item.VideoUrl</td>
                                 <td>
                                     <img alt="default"
                                          src="@(string.IsNullOrEmpty(item.VideoCoverImageUrl) ? "/images/default-150x150.png" : item.VideoCoverImageUrl)"
                                          style="width: 3rem;height: 3rem;border-radius: 9999px;object-fit: cover;margin-left: auto;margin-right: auto;border: 2px solid #f1f5f9;" />
                                 </td>
-                                <td>@item.ReservationNumber</td>
+                                <td style="align-content:center">@item.ReservationNumber</td>
                                 <td><a asp-controller="About" asp-action="AboutDelete" asp-route-id="@item.AboutId" class="btn btn-danger btn-sm">Sil</a></td>
                                 <td><a asp-controller="About" asp-action="AboutUpdate" asp-route-id="@item.AboutId" class="btn btn-success btn-sm">Güncelle</a></td>
                             </tr>

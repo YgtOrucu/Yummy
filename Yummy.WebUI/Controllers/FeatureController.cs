@@ -18,8 +18,8 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
-                var responseMessage = await client.GetAsync("https://localhost:7287/api/Features");
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.GetAsync("Features");
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     var values = await responseMessage.Content.ReadFromJsonAsync<List<ResultFeatureDto>>();
@@ -47,8 +47,8 @@ namespace Yummy.WebUI.Controllers
                 if (!ModelState.IsValid)
                     return View(createFeatureDto);
 
-                var client = _httpClientFactory.CreateClient();
-                var responsemessage = await client.PostAsJsonAsync("https://localhost:7287/api/Features", createFeatureDto);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responsemessage = await client.PostAsJsonAsync("Features", createFeatureDto);
 
                 if (responsemessage.IsSuccessStatusCode)
                 {
@@ -66,8 +66,8 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
-                var responsemessage = await client.DeleteAsync("https://localhost:7287/api/Features?id=" + id);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responsemessage = await client.DeleteAsync("Features?id=" + id);
 
                 if (responsemessage.IsSuccessStatusCode)
                     return RedirectToAction("FeatureList");
@@ -85,13 +85,13 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
-                var responseMessage = await client.GetAsync("https://localhost:7287/api/Features/GetFeatureById?id=" + id);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.GetAsync("Features/GetFeatureById?id=" + id);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    var valuess = await responseMessage.Content.ReadFromJsonAsync<UpdateFeatureDto>();
-                    return View(valuess);
+                    var values = await responseMessage.Content.ReadFromJsonAsync<UpdateFeatureDto>();
+                    return View(values);
                 }
             }
             catch (Exception ex)
@@ -110,8 +110,8 @@ namespace Yummy.WebUI.Controllers
                 if (!ModelState.IsValid)
                     return View(updateFeatureDto);
 
-                var client = _httpClientFactory.CreateClient();
-                var responseMessage = await client.PutAsJsonAsync("https://localhost:7287/api/Features", updateFeatureDto);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.PutAsJsonAsync("Features", updateFeatureDto);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {

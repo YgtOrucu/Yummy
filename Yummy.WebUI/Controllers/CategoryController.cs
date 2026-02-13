@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Text;
 using Yummy.WebUI.Dtos.CategoryDto;
 
 namespace Yummy.WebUI.Controllers
@@ -18,8 +16,8 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
-                var responseMessage = await client.GetAsync("https://localhost:7287/api/Categories");
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.GetAsync("Categories");
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     var values = await responseMessage.Content.ReadFromJsonAsync<List<ResultCategoryDto>>();
@@ -47,10 +45,8 @@ namespace Yummy.WebUI.Controllers
                 if (!ModelState.IsValid)
                     return View(createCategoryDto);
 
-                var client = _httpClientFactory.CreateClient();
-                var JsonData = JsonConvert.SerializeObject(createCategoryDto);
-                var StringContent = new StringContent(JsonData, Encoding.UTF8, "application/json");
-                var responsemessage = await client.PostAsync("https://localhost:7287/api/Categories", StringContent);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responsemessage = await client.PostAsJsonAsync("Categories", createCategoryDto);
 
                 if (responsemessage.IsSuccessStatusCode)
                 {
@@ -68,8 +64,8 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
-                var responsemessage = await client.DeleteAsync("https://localhost:7287/api/Categories?id=" + id);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responsemessage = await client.DeleteAsync("Categories?id=" + id);
 
                 if (responsemessage.IsSuccessStatusCode)
                     return RedirectToAction("CategoryList");
@@ -87,8 +83,8 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
-                var responseMessage = await client.GetAsync("https://localhost:7287/api/Categories/GetCategoryById?id=" + id);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.GetAsync("Categories/GetCategoryById?id=" + id);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -112,10 +108,8 @@ namespace Yummy.WebUI.Controllers
                 if (!ModelState.IsValid)
                     return View(updateCategoryDto);
 
-                var client = _httpClientFactory.CreateClient();
-                var JsonData = JsonConvert.SerializeObject(updateCategoryDto);
-                var stringContent = new StringContent(JsonData, Encoding.UTF8, "application/json");
-                var responseMessage = await client.PutAsync("https://localhost:7287/api/Categories", stringContent);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.PutAsJsonAsync("Categories", updateCategoryDto);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {

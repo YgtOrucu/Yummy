@@ -17,8 +17,8 @@ namespace Yummy.WebUI.Controllers
         }
         private async Task<List<SelectListItem>> GetCategoriesForDropdown()
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7287/api/Categories");
+            var client = _httpClientFactory.CreateClient("YummyClient");
+            var responseMessage = await client.GetAsync("Categories");
 
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -37,8 +37,8 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
-                var responseMessage = await client.GetAsync("https://localhost:7287/api/Products");
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.GetAsync("Products");
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -86,10 +86,8 @@ namespace Yummy.WebUI.Controllers
                     createProductDto.ImageUrl = "/images/ProductImage/" + imageName;
                 }
 
-                var client = _httpClientFactory.CreateClient();
-                var JsonData = JsonConvert.SerializeObject(createProductDto);
-                var stringContent = new StringContent(JsonData, Encoding.UTF8, "application/json");
-                var responseMessage = await client.PostAsync("https://localhost:7287/api/Products", stringContent);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.PostAsJsonAsync("Products", createProductDto);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -127,8 +125,8 @@ namespace Yummy.WebUI.Controllers
                         System.IO.File.Delete(oldImagePath);
                     }
                 }
-                var client = _httpClientFactory.CreateClient();
-                var responseMessage = await client.DeleteAsync("https://localhost:7287/api/Products?id=" + id);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.DeleteAsync("Products?id=" + id);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -147,15 +145,14 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
-                var client = _httpClientFactory.CreateClient();
-                var responseMessage = await client.GetAsync("https://localhost:7287/api/Products/GetProductById?id=" + id);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.GetAsync("Products/GetProductById?id=" + id);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     var values = await responseMessage.Content.ReadFromJsonAsync<UpdateProductDto>();
-                    var getCategory = await client.GetAsync("https://localhost:7287/api/Categories");
-                    var CategoryJsonData = await getCategory.Content.ReadAsStringAsync();
-                    var categories = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(CategoryJsonData);
+                    var getCategory = await client.GetAsync("Categories");
+                    var categories = await getCategory.Content.ReadFromJsonAsync<List<ResultCategoryDto>>();
 
                     List<SelectListItem> selectListItems = (from x in categories
                                                             select new SelectListItem
@@ -212,10 +209,8 @@ namespace Yummy.WebUI.Controllers
                     await updateProductDto.ImageFile.CopyToAsync(stream);
                     updateProductDto.ImageUrl = "/images/ProductImage/" + imageName;
                 }
-                var client = _httpClientFactory.CreateClient();
-                var JsonData = JsonConvert.SerializeObject(updateProductDto);
-                var stringContent = new StringContent(JsonData, Encoding.UTF8, "application/json");
-                var responseMessage = await client.PutAsync("https://localhost:7287/api/Products", stringContent);
+                var client = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client.PutAsJsonAsync("Products", updateProductDto);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -231,8 +226,8 @@ namespace Yummy.WebUI.Controllers
 
         private async Task<GetProductByIdDto> GetOldImagControlSelectProduct(int productId)
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7287/api/Products/GetProductById?id=" + productId);
+            var client = _httpClientFactory.CreateClient("YummyClient");
+            var responseMessage = await client.GetAsync("Products/GetProductById?id=" + productId);
 
             if (responseMessage.IsSuccessStatusCode)
             {
