@@ -61,7 +61,7 @@ namespace Yummy.WebUI.Controllers
             {
                 return View(ex.Message);
             }
-            return View();
+            return View(createCategoryDto);
         }
 
         public async Task<IActionResult> CategoryDelete(int id)
@@ -126,7 +126,7 @@ namespace Yummy.WebUI.Controllers
             {
                 return View(ex.Message);
             }
-            return View();
+            return View(updateCategoryDto);
         }
     }
 }

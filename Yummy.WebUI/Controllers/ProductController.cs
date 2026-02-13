@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System.Text;
-using Yummy.WebUI.Dtos.ProductDto;
 using Yummy.WebUI.Dtos.CategoryDto;
+using Yummy.WebUI.Dtos.ProductDto;
 
 namespace Yummy.WebUI.Controllers
 {
@@ -99,7 +99,7 @@ namespace Yummy.WebUI.Controllers
                 {
                     var categoryList = await GetCategoriesForDropdown();
                     ViewBag.CategoryList = categoryList;
-                    return View();
+                    return View(createProductDto);
                 }
             }
             catch (Exception ex)
@@ -112,6 +112,21 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
+                var resource = Directory.GetCurrentDirectory();
+                var oldImage = await GetOldImagControlSelectProduct(id);
+                if (!string.IsNullOrEmpty(oldImage.ImageUrl))
+                {
+                    var oldImagePath = Path.Combine(
+                        resource,
+                        "wwwroot",
+                        oldImage.ImageUrl.TrimStart('/')
+                    );
+
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
                 var client = _httpClientFactory.CreateClient();
                 var responseMessage = await client.DeleteAsync("https://localhost:7287/api/Products?id=" + id);
 
@@ -206,7 +221,7 @@ namespace Yummy.WebUI.Controllers
                 {
                     return RedirectToAction("ProductList");
                 }
-                return View();
+                return View(updateProductDto);
             }
             catch (Exception ex)
             {
