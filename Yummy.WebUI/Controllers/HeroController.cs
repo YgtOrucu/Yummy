@@ -121,7 +121,7 @@ namespace Yummy.WebUI.Controllers
                 var responseMessage = await client.GetAsync("https://localhost:7287/api/Heroes/GetHeroById?id=" + id);
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    var values = await responseMessage.Content.ReadFromJsonAsync<GetHeroByIdDto>();
+                    var values = await responseMessage.Content.ReadFromJsonAsync<UpdateHeroDto>();
                     return View(values);
                 }
             }

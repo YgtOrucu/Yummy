@@ -152,7 +152,7 @@ namespace Yummy.WebUI.Controllers
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    var values = await responseMessage.Content.ReadFromJsonAsync<GetProductByIdDto>();
+                    var values = await responseMessage.Content.ReadFromJsonAsync<UpdateProductDto>();
                     var getCategory = await client.GetAsync("https://localhost:7287/api/Categories");
                     var CategoryJsonData = await getCategory.Content.ReadAsStringAsync();
                     var categories = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(CategoryJsonData);

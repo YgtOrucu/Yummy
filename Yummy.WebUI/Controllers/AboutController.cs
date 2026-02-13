@@ -1,0 +1,263 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
+using System.Text;
+using Yummy.WebUI.Dtos.AboutDto;
+
+namespace Yummy.WebUI.Controllers
+{
+    public class AboutController : Controller
+    {
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public AboutController(IHttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+        }
+
+        public async Task<IActionResult> AboutList()
+        {
+            try
+            {
+                using(var client = _httpClientFactory.CreateClient())
+                {
+                    var responseMessage = await client.GetAsync("https://localhost:7287/api/Abouts");
+
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        var values = await responseMessage.Content.ReadFromJsonAsync<List<ResultAboutDto>>();
+                        return View(values);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return View(ex.Message);
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult AboutCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AboutCreate(CreateAboutDto createAboutDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return View(createAboutDto);
+
+                if (createAboutDto.ImageFileForImageUrl != null)
+                {
+                    var resource = Directory.GetCurrentDirectory();
+                    var extension = Path.Combine(createAboutDto.ImageFileForImageUrl.FileName);
+                    var imageName = Guid.NewGuid() + extension;
+
+                    var uploadPath = Path.Combine(resource, "wwwroot", "images", "AboutImage");
+                    var saveLocation = Path.Combine(uploadPath, imageName);
+                    using var stream = new FileStream(saveLocation, FileMode.Create);
+                    await createAboutDto.ImageFileForImageUrl.CopyToAsync(stream);
+                    createAboutDto.ImageUrl = "/images/AboutImage/" + imageName;
+                }
+
+                if (createAboutDto.ImageFileForVideoCover != null)
+                {
+                    var resource = Directory.GetCurrentDirectory();
+                    var extension = Path.Combine(createAboutDto.ImageFileForVideoCover.FileName);
+                    var imageName = Guid.NewGuid() + extension;
+
+                    var uploadPath = Path.Combine(resource, "wwwroot", "images", "AboutImage");
+                    var saveLocation = Path.Combine(uploadPath, imageName);
+                    using var stream = new FileStream(saveLocation, FileMode.Create);
+                    await createAboutDto.ImageFileForVideoCover.CopyToAsync(stream);
+                    createAboutDto.VideoCoverImageUrl = "/images/AboutImage/" + imageName;
+                }
+
+                var client = _httpClientFactory.CreateClient();
+                var JsonData = JsonConvert.SerializeObject(createAboutDto);
+                var stringContent = new StringContent(JsonData, Encoding.UTF8, "application/json");
+                var responseMessage = await client.PostAsync("https://localhost:7287/api/Abouts", stringContent);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("AboutList");
+                }
+                else
+                {
+                    return View(createAboutDto);
+                }
+            }
+            catch (Exception ex)
+            {
+                return View(ex.Message);
+            }  
+        }
+
+        public async Task<IActionResult> AboutDelete(int id)
+        {
+            try
+            {
+                var resource = Directory.GetCurrentDirectory();
+                var oldImage = await GetOldImagControlSelectAbout(id);
+                if (!string.IsNullOrEmpty(oldImage.ImageUrl))
+                {
+                    var oldImagePath = Path.Combine(
+                        resource,
+                        "wwwroot",
+                        oldImage.ImageUrl.TrimStart('/')
+                    );
+
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+                if (!string.IsNullOrEmpty(oldImage.VideoCoverImageUrl))
+                {
+                    var oldImagePath = Path.Combine(
+                        resource,
+                        "wwwroot",
+                        oldImage.VideoCoverImageUrl.TrimStart('/')
+                    );
+
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                var client = _httpClientFactory.CreateClient();
+                var responseMessage = await client.DeleteAsync("https://localhost:7287/api/Abouts?id=" + id);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("AboutList");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AboutUpdate(int id)
+        {
+            try
+            {
+                var client = _httpClientFactory.CreateClient();
+                var responseMessage = await client.GetAsync("https://localhost:7287/api/Abouts/GetAboutById?id=" + id);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var values = await responseMessage.Content.ReadFromJsonAsync<UpdateAboutDto>();
+                    return View(values);
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AboutUpdate(UpdateAboutDto updateAboutDto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(updateAboutDto);
+                }
+
+                if (updateAboutDto.ImageFileForImageUrl != null)
+                {
+                    var resource = Directory.GetCurrentDirectory();
+                    var extension = Path.GetExtension(updateAboutDto.ImageFileForImageUrl.FileName);
+                    var imageName = Guid.NewGuid() + extension;
+
+                    var uploadPath = Path.Combine(resource, "wwwroot", "images", "ProductImage");
+                    var saveLocation = Path.Combine(uploadPath, imageName);
+
+                    var oldImage = await GetOldImagControlSelectAbout(updateAboutDto.AboutId);
+                    if (!string.IsNullOrEmpty(oldImage.ImageUrl))
+                    {
+                        var oldImagePath = Path.Combine(
+                            resource,
+                            "wwwroot",
+                            oldImage.ImageUrl.TrimStart('/')
+                        );
+
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+                    using var stream = new FileStream(saveLocation, FileMode.Create);
+                    await updateAboutDto.ImageFileForImageUrl.CopyToAsync(stream);
+                    updateAboutDto.ImageUrl = "/images/ProductImage/" + imageName;
+                }
+                if (updateAboutDto.ImageFileForVideoCover != null)
+                {
+                    var resource = Directory.GetCurrentDirectory();
+                    var extension = Path.GetExtension(updateAboutDto.ImageFileForVideoCover.FileName);
+                    var imageName = Guid.NewGuid() + extension;
+
+                    var uploadPath = Path.Combine(resource, "wwwroot", "images", "ProductImage");
+                    var saveLocation = Path.Combine(uploadPath, imageName);
+
+                    var oldImage = await GetOldImagControlSelectAbout(updateAboutDto.AboutId);
+                    if (!string.IsNullOrEmpty(oldImage.VideoCoverImageUrl))
+                    {
+                        var oldImagePath = Path.Combine(
+                            resource,
+                            "wwwroot",
+                            oldImage.ImageUrl.TrimStart('/')
+                        );
+
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+                    using var stream = new FileStream(saveLocation, FileMode.Create);
+                    await updateAboutDto.ImageFileForVideoCover.CopyToAsync(stream);
+                    updateAboutDto.VideoCoverImageUrl = "/images/ProductImage/" + imageName;
+                }
+                var client = _httpClientFactory.CreateClient();
+                var JsonData = JsonConvert.SerializeObject(updateAboutDto);
+                var stringContent = new StringContent(JsonData, Encoding.UTF8, "application/json");
+                var responseMessage = await client.PutAsync("https://localhost:7287/api/Abouts", stringContent);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("AboutList");
+                }
+                return View(updateAboutDto);
+            }
+            catch (Exception ex)
+            {
+                return View(ex.Message);
+            }
+        }
+
+        private async Task<GetAboutByIdDto> GetOldImagControlSelectAbout(int aboutıd)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync("https://localhost:7287/api/Abouts/GetAboutById?id=" + aboutıd);
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var values = await responseMessage.Content.ReadFromJsonAsync<GetAboutByIdDto>();
+                return values;
+            }
+            return new GetAboutByIdDto();
+        }
+    }
+}

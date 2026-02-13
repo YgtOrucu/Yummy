@@ -92,7 +92,7 @@ namespace Yummy.WebUI.Controllers
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    var valuess = await responseMessage.Content.ReadFromJsonAsync<GetCategoryByIdDto>();
+                    var valuess = await responseMessage.Content.ReadFromJsonAsync<UpdateCategoryDto>();
                     return View(valuess);
                 }
             }
