@@ -14,6 +14,15 @@ builder.Services.AddHttpClient("YummyClient", client =>
 
     client.BaseAddress = new Uri(baseUrl);
 });
+
+builder.Services.AddHttpClient("OpenAIClient", client =>
+{
+    var baseUrl = builder.Configuration.GetSection("OpenAIAddress")["AIUrl"];
+    if (string.IsNullOrEmpty(baseUrl))
+        throw new Exception("HATA: appsettings içindeki AIUrl okunamadý!");
+
+    client.BaseAddress = new Uri(baseUrl);
+});
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<MarkerValidation>();
 var app = builder.Build();

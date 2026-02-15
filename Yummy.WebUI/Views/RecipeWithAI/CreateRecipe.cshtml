@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "CreateRecipe";
+    Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
+}
+
+<div class="col-12 col-md-12 col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="section-title">Yapay Zeka destekli Tarif Önerisi</div>
+            <div class="table-responsive">
+                <form method="post">
+                    <label>Tarif önerisi almak için elinizde ki malzemeleri giriniz.</label>
+                    <input type="text" class="form-control" name="prompt" placeholder="Merhaba. Elimde ki malzemeler : Soğan,Patates,Salatalalık... vb" />
+                    <br />
+                    <button type="submit" class="btn btn-primary">Tarif Önerisi Oluştur</button>
+                </form>
+                <br /><br />
+
+                @if (ViewBag.recipe != null)
+                {
+                    <hr />
+                    <h5>AI ile Oluşturulan Yemek Tarifi Önerisi</h5>
+                    <hr />
+                    @Html.Raw(ViewBag.recipe.ToString())
+                }
+            </div>
+        </div>
+    </div>
+</div>
