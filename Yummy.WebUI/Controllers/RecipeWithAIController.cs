@@ -28,7 +28,7 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
-                var ApıKey = "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";
+                var ApıKey = "";
                 var client = _httpClientFactory.CreateClient("OpenAIClient");
 
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApıKey);
