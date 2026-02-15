@@ -1,26 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Yummy.WebUI.Dtos.FeatureDto;
+using Yummy.WebUI.Dtos.ContactDto;
 
 namespace Yummy.WebUI.Controllers
 {
-    public class FeatureController : Controller
+    public class ContactController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public FeatureController(IHttpClientFactory httpClientFactory)
+        public ContactController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<IActionResult> FeatureList()
+        public async Task<IActionResult> ContactList()
         {
             try
             {
                 var client = _httpClientFactory.CreateClient("YummyClient");
-                var responseMessage = await client.GetAsync("Features");
+                var responseMessage = await client.GetAsync("Contacts");
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    var values = await responseMessage.Content.ReadFromJsonAsync<List<ResultFeatureDto>>();
+                    var values = await responseMessage.Content.ReadFromJsonAsync<List<ResultContactDto>>();
                     return View(values);
                 }
             }
@@ -32,43 +32,43 @@ namespace Yummy.WebUI.Controllers
         }
 
         [HttpGet]
-        public IActionResult FeatureCreate()
+        public IActionResult ContactCreate()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> FeatureCreate(CreateFeatureDto createFeatureDto)
+        public async Task<IActionResult> ContactCreate(CreateContactDto createContactDto)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return View(createFeatureDto);
+                    return View(createContactDto);
 
                 var client = _httpClientFactory.CreateClient("YummyClient");
-                var responsemessage = await client.PostAsJsonAsync("Features", createFeatureDto);
+                var responsemessage = await client.PostAsJsonAsync("Contacts", createContactDto);
 
                 if (responsemessage.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("FeatureList");
+                    return RedirectToAction("ContactList");
                 }
             }
             catch (Exception ex)
             {
                 return View(ex.Message);
             }
-            return View(createFeatureDto);
+            return View(createContactDto);
         }
 
-        public async Task<IActionResult> FeatureDelete(int id)
+        public async Task<IActionResult> ContactDelete(int id)
         {
             try
             {
                 var client = _httpClientFactory.CreateClient("YummyClient");
-                var responsemessage = await client.DeleteAsync("Features?id=" + id);
+                var responsemessage = await client.DeleteAsync("Contacts?id=" + id);
 
                 if (responsemessage.IsSuccessStatusCode)
-                    return RedirectToAction("FeatureList");
+                    return RedirectToAction("ContactList");
 
             }
             catch (Exception ex)
@@ -79,16 +79,16 @@ namespace Yummy.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> FeatureUpdate(int id)
+        public async Task<IActionResult> ContactUpdate(int id)
         {
             try
             {
                 var client = _httpClientFactory.CreateClient("YummyClient");
-                var responseMessage = await client.GetAsync("Features/GetFeatureById?id=" + id);
+                var responseMessage = await client.GetAsync("Contacts/GetContactById?id=" + id);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    var values = await responseMessage.Content.ReadFromJsonAsync<UpdateFeatureDto>();
+                    var values = await responseMessage.Content.ReadFromJsonAsync<UpdateContactDto>();
                     return View(values);
                 }
             }
@@ -101,26 +101,26 @@ namespace Yummy.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> FeatureUpdate(UpdateFeatureDto updateFeatureDto)
+        public async Task<IActionResult> ContactUpdate(UpdateContactDto updateContactDto)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return View(updateFeatureDto);
+                    return View(updateContactDto);
 
                 var client = _httpClientFactory.CreateClient("YummyClient");
-                var responseMessage = await client.PutAsJsonAsync("Features", updateFeatureDto);
+                var responseMessage = await client.PutAsJsonAsync("Contacts", updateContactDto);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("FeatureList");
+                    return RedirectToAction("ContactList");
                 }
             }
             catch (Exception ex)
             {
                 return View(ex.Message);
             }
-            return View(updateFeatureDto);
+            return View(updateContactDto);
         }
     }
 }
