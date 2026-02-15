@@ -11,6 +11,7 @@ using Yummy.WebAPI.Dtos.MessageDto.MessageDtoForAdminThema.MessageListForNavbarS
 using Yummy.WebAPI.Dtos.ProductDto;
 using Yummy.WebAPI.Dtos.ReservationDto;
 using Yummy.WebAPI.Dtos.TestimonialDto;
+using Yummy.WebAPI.Dtos.YummyEventsDto;
 using Yummy.WebAPI.Entities;
 
 namespace Yummy.WebApi.Mapping.AutoMapperProfile
@@ -74,6 +75,11 @@ namespace Yummy.WebApi.Mapping.AutoMapperProfile
             CreateMap<Message, GetMessageByIdDto>().ReverseMap();
             CreateMap<Message, UpdateMessageDto>().ReverseMap();
             CreateMap<Message, MessageListByIsReadFalseDto>().ReverseMap();
+
+            CreateMap<YummyEvents, ResultYummyEventDto>().ReverseMap();
+            CreateMap<YummyEvents, CreateYummyEventDto>().ReverseMap();
+            CreateMap<YummyEvents, GetYummyEventByIdDto>().ReverseMap();
+            CreateMap<YummyEvents, UpdateYummyEventDto>().ReverseMap();
         }
     }
 }

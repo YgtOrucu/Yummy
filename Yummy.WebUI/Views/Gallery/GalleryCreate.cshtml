@@ -1,0 +1,30 @@
+﻿@model CreateGalleryDto
+
+@{
+    ViewData["Title"] = "GalleryCreate";
+    Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
+}
+<div class="col-12 col-md-12 col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="section-title">Ekleme İşlemi</div>
+            <div class="table-responsive">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <form method="post" enctype="multipart/form-data">
+                    <label asp-for="Title">Resim İçin Başlık</label>
+                    <input type="text" class="form-control" asp-for="Title" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                    <br />
+                    <label asp-for="ImageFile">Resim Seç</label>
+                    <input type="file" class="form-control" asp-for="ImageFile" />
+                    <br />
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                    <a asp-controller="Gallery" asp-action="GalleryList" class="btn btn-danger">Geri</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

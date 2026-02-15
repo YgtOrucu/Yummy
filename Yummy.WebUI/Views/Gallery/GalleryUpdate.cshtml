@@ -1,0 +1,37 @@
+﻿@model UpdateGalleryDto
+
+@{
+    ViewData["Title"] = "GalleryUpdate";
+    Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
+}
+
+<div class="col-12 col-md-12 col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="section-title">Güncelleme İşlemi</div>
+            <div class="table-responsive">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <form method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="GalleryId" />
+                    <label asp-for="Title">Resim İçin Başlık</label>
+                    <input type="text" class="form-control" asp-for="Title" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                    <br />
+                    <label>Mevcut Resim</label>
+                    <br />
+                    <img src="@Model.ImageUrl" style="width:150px; height:100px; border-radius:10px; border:1px solid #ddd" />
+                    <input type="hidden" asp-for="ImageUrl" />
+                    <br />
+                    <label>Yeni Resim Seç (Opsiyonel)</label>
+                    <input type="file" class="form-control" asp-for="ImageFile" />
+                    <br />
+                    <button type="submit" class="btn btn-primary">Güncelle</button>
+                    <a asp-controller="Gallery" asp-action="GalleryList" class="btn btn-danger">Geri</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

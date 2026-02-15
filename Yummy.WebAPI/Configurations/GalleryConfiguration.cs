@@ -9,6 +9,7 @@ namespace Yummy.WebAPI.Configurations
         public void Configure(EntityTypeBuilder<Gallery> builder)
         {
             builder.Property(x => x.ImageUrl).HasColumnType("varchar").HasMaxLength(250);
+            builder.Property(x => x.Title).HasColumnType("varchar").HasMaxLength(50);
         }
     }
 }

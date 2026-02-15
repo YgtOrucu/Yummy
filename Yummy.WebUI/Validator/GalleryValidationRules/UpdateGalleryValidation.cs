@@ -7,7 +7,8 @@ namespace Yummy.WebUI.Validator.GalleryValidationRules
     {
         public UpdateGalleryValidation()
         {
-            RuleFor(x => x.ImageUrl).NotEmpty().WithMessage("Görsel yolu boş geçilemez.");
+            RuleFor(x => x.ImageFile).NotEmpty().WithMessage("Görsel yolu boş geçilemez.");
+            RuleFor(x => x.Title).NotEmpty().WithMessage("Başlık alanı boş geçilemez.");
         }
     }
 }

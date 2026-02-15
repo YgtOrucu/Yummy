@@ -10,6 +10,8 @@
     <Folder Include="wwwroot\images\ChefImage\" />
     <Folder Include="wwwroot\images\AboutImage\" />
     <Folder Include="wwwroot\images\HeroImage\" />
+    <Folder Include="wwwroot\images\GalleryImage\" />
+    <Folder Include="wwwroot\images\YummyEventImage\" />
     <Folder Include="wwwroot\images\TestimonialImage\" />
     <Folder Include="wwwroot\images\ProductImage\" />
   </ItemGroup>

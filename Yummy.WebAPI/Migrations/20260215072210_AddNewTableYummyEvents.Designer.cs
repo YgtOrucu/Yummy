@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Yummy.WebAPI.Context;
 
@@ -11,9 +12,11 @@ using Yummy.WebAPI.Context;
 namespace Yummy.WebAPI.Migrations
 {
     [DbContext(typeof(YummyContext))]
-    partial class YummyContextModelSnapshot : ModelSnapshot
+    [Migration("20260215072210_AddNewTableYummyEvents")]
+    partial class AddNewTableYummyEvents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,10 +170,6 @@ namespace Yummy.WebAPI.Migrations
 
                     b.Property<string>("ImageUrl")
                         .HasMaxLength(250)
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(50)
                         .HasColumnType("varchar");
 
                     b.HasKey("GalleryId");
@@ -366,7 +365,6 @@ namespace Yummy.WebAPI.Migrations
                         .HasColumnType("varchar");
 
                     b.Property<string>("ImageUrl")
-                        .HasMaxLength(80)
                         .HasColumnType("varchar");
 
                     b.Property<decimal>("Price")

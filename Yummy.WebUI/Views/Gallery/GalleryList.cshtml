@@ -1,0 +1,44 @@
+﻿@model List<ResultGalleryDto>
+
+@{
+    ViewData["Title"] = "GalleryList";
+    Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
+}
+
+<div class="col-12 col-md-12 col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center" style="height:80px;">
+                <div class="section-title m-0">Galeri</div>
+                <a class="btn btn-primary btn-sm" href="/Gallery/GalleryCreate">Ekle</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Adı</th>                          
+                            <th scope="col">Image</th>
+                            <th scope="col">Sil</th>
+                            <th scope="col">Güncele</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="align-content:center">@item.Title</td>
+                                <td>
+                                    <img alt="Bakery item thumbnail"
+                                         src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/default-150x150.png" : item.ImageUrl)"
+                                         style="width: 3rem;height: 3rem;border-radius: 9999px;object-fit: cover;margin-left: auto;margin-right: auto;border: 2px solid #f1f5f9;" />
+                                </td>
+                                <td><a asp-controller="Gallery" asp-action="GalleryDelete" asp-route-id="@item.GalleryId" class="btn btn-danger btn-sm">Sil</a></td>
+                                <td><a asp-controller="Gallery" asp-action="GalleryUpdate" asp-route-id="@item.GalleryId" class="btn btn-success btn-sm">Güncelle</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

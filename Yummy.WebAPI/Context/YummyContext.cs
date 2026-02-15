@@ -25,5 +25,6 @@ namespace Yummy.WebAPI.Context
         public DbSet<Gallery> Galleries  { get; set; }
         public DbSet<Contact> Contacts  { get; set; }
         public DbSet<Message> Messages   { get; set; }
+        public DbSet<YummyEvents> YummyEvents { get; set; }
     }
 }
