@@ -1,44 +1,43 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "CreateTranslate";
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="section-title">Yapay Zeka Destekli Çeviri Sistemi</div>
+                <div class="table-responsive">
+                    <form method="post">
+                        <label>Çevrilecek metni giriniz:</label>
+                        <textarea type="text" class="form-control" name="prompt" style="height:130px !important" placeholder="Çevirmek istediğiniz kelime veya cümleyi yazın..." required></textarea>
+                        <br />
 
-<div class="col-12 col-md-12 col-lg-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="section-title">Yapay Zeka Destekli Çeviri Sistemi</div>
-            <div class="table-responsive">
-                <form method="post">
-                    <label>Çevrilecek metni giriniz:</label>
-                    <textarea type="text" class="form-control" name="prompt" style="height:130px !important" placeholder="Çevirmek istediğiniz kelime veya cümleyi yazın..." required ></textarea>
-                    <br />
+                        <label>Çevirmek istediğiniz dili seçiniz:</label>
+                        <select class="form-control" name="targetLanguage">
+                            <option value="İngilizce">İngilizce</option>
+                            <option value="Türkçe">Türkçe</option>
+                            <option value="Almanca">Almanca</option>
+                            <option value="Fransızca">Fransızca</option>
+                            <option value="İspanyolca">İspanyolca</option>
+                            <option value="Rusça">Rusça</option>
+                        </select>
+                        <br />
 
-                    <label>Çevirmek istediğiniz dili seçiniz:</label>
-                    <select class="form-control" name="targetLanguage">
-                        <option value="İngilizce">İngilizce</option>
-                        <option value="Türkçe">Türkçe</option>
-                        <option value="Almanca">Almanca</option>
-                        <option value="Fransızca">Fransızca</option>
-                        <option value="İspanyolca">İspanyolca</option>
-                        <option value="Rusça">Rusça</option>
-                    </select>
-                    <br />
+                        <button type="submit" class="btn btn-primary">Hemen Çevir</button>
+                    </form>
+                    <br /><br />
 
-                    <button type="submit" class="btn btn-primary">Hemen Çevir</button>
-                </form>
-                <br /><br />
-
-                @if (ViewBag.translatedText != null)
-                {
-                    <hr />
-                    <h5>Çeviri Sonucu</h5>
-                    <div class="alert alert-info">
-                        @Html.Raw(ViewBag.translatedText.ToString())
-                    </div>
-                }
+                    @if (ViewBag.translatedText != null)
+                    {
+                        <hr />
+                        <h5>Çeviri Sonucu</h5>
+                        <div class="alert alert-info">
+                            @Html.Raw(ViewBag.translatedText.ToString())
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
 </div>
-

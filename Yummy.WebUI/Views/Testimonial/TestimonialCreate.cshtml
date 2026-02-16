@@ -4,36 +4,37 @@
     ViewData["Title"] = "TestimonialCreate";
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
-
-<div class="col-12 col-md-12 col-lg-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="section-title">Ekleme İşlemi</div>
-            <div class="table-responsive">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <form method="post" enctype="multipart/form-data">
-                    <label asp-for="Name">Ad Soyad</label>
-                    <input type="text" class="form-control" asp-for="Name" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                    <br />
-                    <label asp-for="Title">Başlık</label>
-                    <input type="text" class="form-control" asp-for="Title" />
-                    <span asp-validation-for="Title" class="text-danger"></span>
-                    <br />
-                    <label asp-for="Rating">Puan</label>
-                    <input type="number" class="form-control" asp-for="Rating" />
-                    <span asp-validation-for="Rating" class="text-danger"></span>
-                    <br />
-                    <label asp-for="ImageFile">Resim Seç</label>
-                    <input type="file" class="form-control" asp-for="ImageFile" />
-                    <br />
-                    <label asp-for="Comment">Yorum</label>
-                    <input type="text" class="form-control" asp-for="Comment" />
-                    <span asp-validation-for="Comment" class="text-danger"></span>
-                    <br />
-                    <button type="submit" class="btn btn-primary">Ekle</button>
-                    <a asp-controller="Testimonial" asp-action="TestimonialList" class="btn btn-danger">Geri</a>
-                </form>
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="section-title">Ekleme İşlemi</div>
+                <div class="table-responsive">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <form method="post" enctype="multipart/form-data">
+                        <label asp-for="Name">Ad Soyad</label>
+                        <input type="text" class="form-control" asp-for="Name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Title">Başlık</label>
+                        <input type="text" class="form-control" asp-for="Title" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Rating">Puan</label>
+                        <input type="number" class="form-control" asp-for="Rating" />
+                        <span asp-validation-for="Rating" class="text-danger"></span>
+                        <br />
+                        <label asp-for="ImageFile">Resim Seç</label>
+                        <input type="file" class="form-control" asp-for="ImageFile" />
+                        <br />
+                        <label asp-for="Comment">Yorum</label>
+                        <input type="text" class="form-control" asp-for="Comment" />
+                        <span asp-validation-for="Comment" class="text-danger"></span>
+                        <br />
+                        <button type="submit" class="btn btn-primary">Ekle</button>
+                        <a asp-controller="Testimonial" asp-action="TestimonialList" class="btn btn-danger">Geri</a>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

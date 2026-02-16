@@ -3,53 +3,53 @@
     ViewData["Title"] = "HeroList";
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
-
-<div class="col-12 col-md-12 col-lg-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="section-title">Hero Alanı</div>
-            <div class="table-responsive">
-                <table class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th scope="col">Başlık</th>
-                            <th scope="col">AltBaşlık</th>
-                            <th scope="col">Açıklama</th>
-                            <th scope="col">VideoUrl</th>
-                            <th scope="col">ImageUrl</th>
-                            <th scope="col">Sil</th>
-                            <th scope="col">Güncele</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="section-title">Hero Alanı</div>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
                             <tr>
-                                <td style="align-content:center">@item.Title</td>
-                                <td style="align-content:center">@item.SubTitle</td>
-                                <td style="align-content:center">@item.Description</td>
-                                <td style="align-content:center">@item.VideoUrl</td>
-                                <td>
-                                    <img alt="Bakery item thumbnail"
-                                         src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/default-150x150.png" : item.ImageUrl)"
-                                         style="width: 3rem;height: 3rem;border-radius: 9999px;object-fit: cover;margin-left: auto;margin-right: auto;border: 2px solid #f1f5f9;" />
-                                </td>
-                                <td style="align-content:center"><a asp-controller="Hero" asp-action="HeroDelete" asp-route-id="@item.HeroId" class="btn btn-danger btn-sm">Sil</a></td>
-                                <td style="align-content:center"><a asp-controller="Hero" asp-action="HeroUpdate" asp-route-id="@item.HeroId" class="btn btn-success btn-sm">Güncelle</a></td>
+                                <th scope="col">Başlık</th>
+                                <th scope="col">AltBaşlık</th>
+                                <th scope="col">Açıklama</th>
+                                <th scope="col">VideoUrl</th>
+                                <th scope="col">ImageUrl</th>
+                                <th scope="col">Sil</th>
+                                <th scope="col">Güncele</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-                @if (Model.Count > 0)
-                {
-                    <a asp-controller="Hero" asp-action="HeroCreate" class="btn btn-primary btn-sm disabled">Ekle</a>
-                }
-                else
-                {
-                    <a asp-controller="Hero" asp-action="HeroCreate" class="btn btn-primary btn-sm">Ekle</a>
-                }
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td style="align-content:center">@item.Title</td>
+                                    <td style="align-content:center">@item.SubTitle</td>
+                                    <td style="align-content:center">@item.Description</td>
+                                    <td style="align-content:center">@item.VideoUrl</td>
+                                    <td>
+                                        <img alt="Bakery item thumbnail"
+                                             src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/default-150x150.png" : item.ImageUrl)"
+                                             style="width: 3rem;height: 3rem;border-radius: 9999px;object-fit: cover;margin-left: auto;margin-right: auto;border: 2px solid #f1f5f9;" />
+                                    </td>
+                                    <td style="align-content:center"><a asp-controller="Hero" asp-action="HeroDelete" asp-route-id="@item.HeroId" class="btn btn-danger btn-sm">Sil</a></td>
+                                    <td style="align-content:center"><a asp-controller="Hero" asp-action="HeroUpdate" asp-route-id="@item.HeroId" class="btn btn-success btn-sm">Güncelle</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @if (Model.Count > 0)
+                    {
+                        <a asp-controller="Hero" asp-action="HeroCreate" class="btn btn-primary btn-sm disabled">Ekle</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Hero" asp-action="HeroCreate" class="btn btn-primary btn-sm">Ekle</a>
+                    }
+                </div>
             </div>
         </div>
     </div>
 </div>
-

@@ -4,41 +4,42 @@
     ViewData["Title"] = "ProductUpdate";
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
-
-<div class="col-12 col-md-12 col-lg-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="section-title">Güncelleme İşlemi</div>
-            <div class="table-responsive">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <form asp-controller="Product" asp-action="ProductUpdate" method="post" enctype="multipart/form-data">
-                    <input type="hidden" asp-for="ProductId" />
-                    <label asp-for="ProductName">Ad</label>
-                    <input type="text" class="form-control" asp-for="ProductName" />
-                    <span asp-validation-for="ProductName" class="text-danger"></span>
-                    <br />
-                    <label asp-for="Description">Açıklama</label>
-                    <input type="text" class="form-control" asp-for="Description" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                    <br />
-                    <label asp-for="Price">Fiyat</label>
-                    <input type="text" class="form-control" asp-for="Price" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                    <br />
-                    <label>Mevcut Resim</label>
-                    <br />
-                    <img src="@Model.ImageUrl" style="width:150px; height:100px; border-radius:10px; border:1px solid #ddd" />
-                    <input type="hidden" asp-for="ImageUrl" /> 
-                    <br/>
-                    <label>Yeni Resim Seç (Opsiyonel)</label>
-                    <input type="file" class="form-control" asp-for="ImageFile" />
-                    <br />
-                    <label asp-for="CategoryId">Category</label>
-                    @Html.DropDownListFor(x => x.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryList, new { @class = "form-control" })
-                    <br />
-                    <button type="submit" class="btn btn-primary">Güncelle</button>
-                    <a asp-controller="Product" asp-action="ProductList" class="btn btn-danger">Geri</a>
-                </form>
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="section-title">Güncelleme İşlemi</div>
+                <div class="table-responsive">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <form asp-controller="Product" asp-action="ProductUpdate" method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="ProductId" />
+                        <label asp-for="ProductName">Ad</label>
+                        <input type="text" class="form-control" asp-for="ProductName" />
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Description">Açıklama</label>
+                        <input type="text" class="form-control" asp-for="Description" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Price">Fiyat</label>
+                        <input type="text" class="form-control" asp-for="Price" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                        <br />
+                        <label>Mevcut Resim</label>
+                        <br />
+                        <img src="@Model.ImageUrl" style="width:150px; height:100px; border-radius:10px; border:1px solid #ddd" />
+                        <input type="hidden" asp-for="ImageUrl" />
+                        <br />
+                        <label>Yeni Resim Seç (Opsiyonel)</label>
+                        <input type="file" class="form-control" asp-for="ImageFile" />
+                        <br />
+                        <label asp-for="CategoryId">Category</label>
+                        @Html.DropDownListFor(x => x.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryList, new { @class = "form-control" })
+                        <br />
+                        <button type="submit" class="btn btn-primary">Güncelle</button>
+                        <a asp-controller="Product" asp-action="ProductList" class="btn btn-danger">Geri</a>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

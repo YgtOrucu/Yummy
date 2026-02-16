@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -17,9 +16,7 @@
             <div class="main-content">
                 <section class="section">
                     <div class="section-body">
-                        <div class="row">
-                            @RenderBody()
-                        </div>
+                        @RenderBody()
                     </div>
                 </section>
                 @await Component.InvokeAsync("SettingsSidebarAdminPage")
@@ -30,5 +27,7 @@
     <script src="/otika-bootstrap-admin-template/assets/js/app.min.js"></script>
     <script src="/otika-bootstrap-admin-template/assets/js/scripts.js"></script>
     <script src="/otika-bootstrap-admin-template/assets/js/custom.js"></script>
+    <script src="/otika-bootstrap-admin-template/assets/bundles/apexcharts/apexcharts.min.js"></script>
+    <script src="/otika-bootstrap-admin-template/assets/js/page/index.js"></script>
 </body>
 </html>

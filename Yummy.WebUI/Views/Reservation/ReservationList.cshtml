@@ -3,46 +3,47 @@
     ViewData["Title"] = "ReservationList";
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
-
-<div class="col-12 col-md-12 col-lg-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="section-title">Rezervasyonlar</div>
-            <div class="table-responsive">
-                <table class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th scope="col">İsim Soyisim</th>
-                            <th scope="col">Mail</th>
-                            <th scope="col">Telefon Numarası</th>
-                            <th scope="col">Rezervasyon Tarihi</th>
-                            <th scope="col">Rezervasyon Saatı</th>
-                            <th scope="col">Toplam Kişi Sayısı</th>
-                            <th scope="col">Mesaj</th>
-                            <th scope="col">Durum</th>
-                            <th scope="col">Sil</th>
-                            <th scope="col">Güncele</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="section-title">Rezervasyonlar</div>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
                             <tr>
-                                <td>@item.Name</td>
-                                <td>@item.Email</td>
-                                <td>@item.Phone</td>
-                                <td>@(item.ReservationDate.ToString("dd/MM/yyyy"))</td>
-                                <td>@item.ReservationTime</td>
-                                <td>@item.PeopleCount</td>
-                                <td>@item.Message</td>
-                                <td>@(item.Status)</td>
-                                <td><a asp-controller="Reservation" asp-action="ReservationDelete" asp-route-id="@item.ReservationId" class="btn btn-danger btn-sm">Sil</a></td>
-                                <td><a asp-controller="Reservation" asp-action="ReservationUpdate" asp-route-id="@item.ReservationId" class="btn btn-success btn-sm">Güncelle</a></td>
+                                <th scope="col">İsim Soyisim</th>
+                                <th scope="col">Mail</th>
+                                <th scope="col">Telefon Numarası</th>
+                                <th scope="col">Rezervasyon Tarihi</th>
+                                <th scope="col">Rezervasyon Saatı</th>
+                                <th scope="col">Toplam Kişi Sayısı</th>
+                                <th scope="col">Mesaj</th>
+                                <th scope="col">Durum</th>
+                                <th scope="col">Sil</th>
+                                <th scope="col">Güncele</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-                <a asp-controller="Reservation" asp-action="ReservationCreate" class="btn btn-primary btn-sm">Ekle</a>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Phone</td>
+                                    <td>@(item.ReservationDate.ToString("dd/MM/yyyy"))</td>
+                                    <td>@item.ReservationTime</td>
+                                    <td>@item.PeopleCount</td>
+                                    <td>@item.Message</td>
+                                    <td>@(item.Status)</td>
+                                    <td><a asp-controller="Reservation" asp-action="ReservationDelete" asp-route-id="@item.ReservationId" class="btn btn-danger btn-sm">Sil</a></td>
+                                    <td><a asp-controller="Reservation" asp-action="ReservationUpdate" asp-route-id="@item.ReservationId" class="btn btn-success btn-sm">Güncelle</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <a asp-controller="Reservation" asp-action="ReservationCreate" class="btn btn-primary btn-sm">Ekle</a>
+                </div>
             </div>
         </div>
     </div>

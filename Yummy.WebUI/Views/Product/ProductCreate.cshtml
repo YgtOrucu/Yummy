@@ -4,40 +4,40 @@
     ViewData["Title"] = "ProductCreate";
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
-
-<div class="col-12 col-md-12 col-lg-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="section-title">Ekleme İşlemi</div>
-            <div class="table-responsive">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <form method="post" enctype="multipart/form-data">
-                    <label asp-for="ProductName">Ad</label>
-                    <input type="text" class="form-control" asp-for="ProductName" />
-                    <span asp-validation-for="ProductName" class="text-danger"></span>
-                    <br />
-                    <label asp-for="Description">Açıklama</label>
-                    <textarea class="form-control" asp-for="Description" rows="4"></textarea>
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                    <br />
-                    <label asp-for="Price">Fiyat</label>
-                    <input type="text" class="form-control" asp-for="Price" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                    <br />
-                    <label asp-for="ImageFile">Resim Seç</label>
-                    <input type="file" class="form-control" asp-for="ImageFile" />
-                    <br />
-                    <label asp-for="CategoryId">Kategori</label>
-                    @Html.DropDownListFor(x => x.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryList, new { @class = "form-control" })
-                    <br />
-                    <button type="submit" class="btn btn-primary">Ekle</button>
-                    <a asp-controller="Product" asp-action="ProductList" class="btn btn-danger">Geri</a>
-                </form>
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="section-title">Ekleme İşlemi</div>
+                <div class="table-responsive">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <form method="post" enctype="multipart/form-data">
+                        <label asp-for="ProductName">Ad</label>
+                        <input type="text" class="form-control" asp-for="ProductName" />
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Description">Açıklama</label>
+                        <textarea class="form-control" asp-for="Description" rows="4"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Price">Fiyat</label>
+                        <input type="text" class="form-control" asp-for="Price" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                        <br />
+                        <label asp-for="ImageFile">Resim Seç</label>
+                        <input type="file" class="form-control" asp-for="ImageFile" />
+                        <br />
+                        <label asp-for="CategoryId">Kategori</label>
+                        @Html.DropDownListFor(x => x.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryList, new { @class = "form-control" })
+                        <br />
+                        <button type="submit" class="btn btn-primary">Ekle</button>
+                        <a asp-controller="Product" asp-action="ProductList" class="btn btn-danger">Geri</a>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 
 
 

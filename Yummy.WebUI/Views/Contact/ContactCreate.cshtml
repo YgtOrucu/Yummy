@@ -4,40 +4,40 @@
     ViewData["Title"] = "ContactCreate";
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
-
-<div class="col-12 col-md-12 col-lg-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="section-title">Ekleme İşlemi</div>
-            <div class="table-responsive">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <form method="post">
-                    <label asp-for="Address">Adres</label>
-                    <input type="text" class="form-control" asp-for="Address" />
-                    <span asp-validation-for="Address" class="text-danger"></span>
-                    <br />
-                    <label asp-for="Phone">Telefon</label>
-                    <input type="text" class="form-control" asp-for="Phone" />
-                    <span asp-validation-for="Phone" class="text-danger"></span>
-                    <br />
-                    <label asp-for="Email">Mail</label>
-                    <input type="text" class="form-control" asp-for="Email" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                    <br />
-                    <label asp-for="OpenHours">Açık Saatler</label>
-                    <input type="text" class="form-control" asp-for="OpenHours" />
-                    <span asp-validation-for="OpenHours" class="text-danger"></span>
-                    <br />
-                    <label asp-for="MapLocation">Harita Bilgisi</label>
-                    <input type="text" class="form-control" asp-for="MapLocation" />
-                    <span asp-validation-for="MapLocation" class="text-danger"></span>
-                    <br />
-                    <button type="submit" class="btn btn-primary">Ekle</button>
-                    <a asp-controller="Contact" asp-action="ContactList" class="btn btn-danger">Geri</a>
-                </form>
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="section-title">Ekleme İşlemi</div>
+                <div class="table-responsive">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <form method="post">
+                        <label asp-for="Address">Adres</label>
+                        <input type="text" class="form-control" asp-for="Address" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Phone">Telefon</label>
+                        <input type="text" class="form-control" asp-for="Phone" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Email">Mail</label>
+                        <input type="text" class="form-control" asp-for="Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <br />
+                        <label asp-for="OpenHours">Açık Saatler</label>
+                        <input type="text" class="form-control" asp-for="OpenHours" />
+                        <span asp-validation-for="OpenHours" class="text-danger"></span>
+                        <br />
+                        <label asp-for="MapLocation">Harita Bilgisi</label>
+                        <input type="text" class="form-control" asp-for="MapLocation" />
+                        <span asp-validation-for="MapLocation" class="text-danger"></span>
+                        <br />
+                        <button type="submit" class="btn btn-primary">Ekle</button>
+                        <a asp-controller="Contact" asp-action="ContactList" class="btn btn-danger">Geri</a>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 

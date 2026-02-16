@@ -3,47 +3,47 @@
     ViewData["Title"] = "ReservationCreate";
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
-
-<div class="col-12 col-md-12 col-lg-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="section-title">Ekleme İşlemi</div>
-            <div class="table-responsive">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <form method="post">
-                    <label asp-for="Name">Ad Soyad</label>
-                    <input type="text" class="form-control" asp-for="Name" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                    <br />
-                    <label asp-for="Email">Mail</label>
-                    <input type="mail" class="form-control" asp-for="Email" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                    <br />
-                    <label asp-for="Phone">Telefon</label>
-                    <input type="tel" class="form-control" asp-for="Phone" />
-                    <span asp-validation-for="Phone" class="text-danger"></span>
-                    <br />
-                    <label asp-for="ReservationDate">Tarih</label>
-                    <input type="date" class="form-control" asp-for="ReservationDate" />
-                    <span asp-validation-for="ReservationDate" class="text-danger"></span>
-                    <br />
-                    <label asp-for="ReservationTime">Saat</label>
-                    <input type="text" class="form-control" asp-for="ReservationTime" />
-                    <span asp-validation-for="ReservationTime" class="text-danger"></span>
-                    <br />
-                    <label asp-for="PeopleCount">Kişi Sayısı</label>
-                    <input type="number" class="form-control" asp-for="PeopleCount" />
-                    <span asp-validation-for="PeopleCount" class="text-danger"></span>
-                    <br />
-                    <label asp-for="Message">Mesaj</label>
-                    <textarea type="text" class="form-control" asp-for="Message" rows="2"> </textarea>
-                    <span asp-validation-for="Message" class="text-danger"></span>
-                    <br />
-                    <button type="submit" class="btn btn-primary">Ekle</button>
-                    <a asp-controller="Reservation" asp-action="ReservationList" class="btn btn-danger">Geri</a>
-                </form>
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="section-title">Ekleme İşlemi</div>
+                <div class="table-responsive">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <form method="post">
+                        <label asp-for="Name">Ad Soyad</label>
+                        <input type="text" class="form-control" asp-for="Name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Email">Mail</label>
+                        <input type="mail" class="form-control" asp-for="Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Phone">Telefon</label>
+                        <input type="tel" class="form-control" asp-for="Phone" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                        <br />
+                        <label asp-for="ReservationDate">Tarih</label>
+                        <input type="date" class="form-control" asp-for="ReservationDate" />
+                        <span asp-validation-for="ReservationDate" class="text-danger"></span>
+                        <br />
+                        <label asp-for="ReservationTime">Saat</label>
+                        <input type="text" class="form-control" asp-for="ReservationTime" />
+                        <span asp-validation-for="ReservationTime" class="text-danger"></span>
+                        <br />
+                        <label asp-for="PeopleCount">Kişi Sayısı</label>
+                        <input type="number" class="form-control" asp-for="PeopleCount" />
+                        <span asp-validation-for="PeopleCount" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Message">Mesaj</label>
+                        <textarea type="text" class="form-control" asp-for="Message" rows="2"> </textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                        <br />
+                        <button type="submit" class="btn btn-primary">Ekle</button>
+                        <a asp-controller="Reservation" asp-action="ReservationList" class="btn btn-danger">Geri</a>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
-

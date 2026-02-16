@@ -4,41 +4,41 @@
     ViewData["Title"] = "ContactList";
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
-
-<div class="col-12 col-md-12 col-lg-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="section-title">İletişim Bilgisi</div>
-            <div class="table-responsive">
-                <table class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th scope="col">Adres</th>
-                            <th scope="col">Telefon</th>
-                            <th scope="col">Mail</th>
-                            <th scope="col">Açık Saatler</th>
-                            <th scope="col">Sil</th>
-                            <th scope="col">Güncele</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="section-title">İletişim Bilgisi</div>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
                             <tr>
-                                <td>@item.Address</td>
-                                <td>@item.Phone</td>
-                                <td>@item.Email</td>
-                                <td>@item.OpenHours</td>
-                                <td><a asp-controller="Contact" asp-action="ContactDelete" asp-route-id="@item.ContactId" class="btn btn-danger btn-sm">Sil</a></td>
-                                <td><a asp-controller="Contact" asp-action="ContactUpdate" asp-route-id="@item.ContactId" class="btn btn-success btn-sm">Güncelle</a></td>
+                                <th scope="col">Adres</th>
+                                <th scope="col">Telefon</th>
+                                <th scope="col">Mail</th>
+                                <th scope="col">Açık Saatler</th>
+                                <th scope="col">Sil</th>
+                                <th scope="col">Güncele</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-                <a asp-controller="Contact" asp-action="ContactCreate" class="btn btn-primary btn-sm">Ekle</a>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Address</td>
+                                    <td>@item.Phone</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.OpenHours</td>
+                                    <td><a asp-controller="Contact" asp-action="ContactDelete" asp-route-id="@item.ContactId" class="btn btn-danger btn-sm">Sil</a></td>
+                                    <td><a asp-controller="Contact" asp-action="ContactUpdate" asp-route-id="@item.ContactId" class="btn btn-success btn-sm">Güncelle</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <a asp-controller="Contact" asp-action="ContactCreate" class="btn btn-primary btn-sm">Ekle</a>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 
