@@ -1,0 +1,125 @@
+﻿@using Newtonsoft.Json
+@model ResultMainChartDto
+
+<div class="row">
+    <div class="col-12 col-sm-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Rezervasyon İstatistikleri</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <canvas id="reservationChart" height="100"></canvas>
+
+                        <div class="row mb-0">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <div class="list-inline text-center">
+                                    <div class="list-inline-item p-r-30">
+                                        <i data-feather="check-circle" class="col-green"></i>
+                                        <h5 class="m-b-0">@Model.TotalApprovedCount</h5>
+                                        <p class="text-muted font-14 m-b-0">Onaylananlar</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <div class="list-inline text-center">
+                                    <div class="list-inline-item p-r-30">
+                                        <i data-feather="clock" class="col-orange"></i>
+                                        <h5 class="m-b-0">@Model.TotalPendingCount</h5>
+                                        <p class="text-muted font-14 m-b-0">Bekleyenler</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <div class="list-inline text-center">
+                                    <div class="list-inline-item p-r-30">
+                                        <i data-feather="x-circle" class="text-danger"></i>
+                                        <h5 class="m-b-0">@Model.TotalCanceledCount</h5>
+                                        <p class="text-muted font-14 m-b-0">İptal Edilenler</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="row mt-5">
+                            <div class="col-7 col-xl-7 mb-3">Toplam Müşteri</div>
+                            <div class="col-5 col-xl-5 mb-3">
+                                <span class="text-big">@Model.TotalCustomerCount</span>
+                                <sup class="col-green">+09%</sup>
+                            </div>
+                            <div class="col-7 col-xl-7 mb-3">Toplam Misafir</div>
+                            <div class="col-5 col-xl-5 mb-3">
+                                <span class="text-big">@Model.TotalGuestCount</span>
+                            </div>
+                            <div class="col-7 col-xl-7 mb-3">Tamamlanan Rez.</div>
+                            <div class="col-5 col-xl-5 mb-3">
+                                <span class="text-big">@Model.CompletedReservationCount</span>
+                                <sup class="col-green">+16%</sup>
+                            </div>
+                            <div class="col-7 col-xl-7 mb-3">Ortalama Kişi</div>
+                            <div class="col-5 col-xl-5 mb-3">
+                                <span class="text-big">@Model.AverageGuestPerReservation.ToString("0.0")</span>
+                            </div>
+                            <div class="col-7 col-xl-7 mb-3">Yeni Müşteriler</div>
+                            <div class="col-5 col-xl-5 mb-3">
+                                <span class="text-big">@Model.NewCustomerCount</span>
+                                <sup class="col-green">+22%</sup>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Model içindeki listenin içinden verileri ayıklıyoruz
+    const labels = @Html.Raw(JsonConvert.SerializeObject(Model.ChartData.Select(x => x.Month).ToList()));
+    const approved = @Html.Raw(JsonConvert.SerializeObject(Model.ChartData.Select(x => x.Approved).ToList()));
+    const pending = @Html.Raw(JsonConvert.SerializeObject(Model.ChartData.Select(x => x.Pending).ToList()));
+    const canceled = @Html.Raw(JsonConvert.SerializeObject(Model.ChartData.Select(x => x.Canceled).ToList()));
+
+    var ctx = document.getElementById('reservationChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Onaylandı',
+                    data: approved,
+                    borderColor: '#28a745',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(40,167,69,0.1)'
+                },
+                {
+                    label: 'Onay Bekliyor',
+                    data: pending,
+                    borderColor: '#ffc107',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(255,193,7,0.1)'
+                },
+                {
+                    label: 'İptal Edildi',
+                    data: canceled,
+                    borderColor: '#dc3545',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(220,53,69,0.1)'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>

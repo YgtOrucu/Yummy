@@ -1,0 +1,237 @@
+﻿@model ResultStatisticalDataDto
+<div class="row">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+            <div class="card-statistic-4">
+                <div class="row w-100 p-3 align-items-center">
+                    <div class="col-9">
+                        <div class="card-content">
+                            <h5 class="font-14">Rezervasyon</h5>
+                            <h2 class="mb-1 font-18">@Model.TotalReservation</h2>
+                            <p class="mb-0 text-small"><span style="color: #6777ef;">Toplam</span> Rezerveler</p>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
+                        <i class="fas fa-calendar-alt font-26" style="color: #6777ef;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+            <div class="card-statistic-4">
+                <div class="row w-100 p-3 align-items-center">
+                    <div class="col-9">
+                        <div class="card-content">
+                            <h5 class="font-14">Müşteriler</h5>
+                            <h2 class="mb-1 font-18">@Model.TotalCustomer</h2>
+                            <p class="mb-0 text-small"><span style="color: #007bff;">Mutlu</span> Üyeler</p>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
+                        <i class="fas fa-users font-26" style="color: #007bff;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+            <div class="card-statistic-4">
+                <div class="row w-100 p-3 align-items-center">
+                    <div class="col-9">
+                        <div class="card-content">
+                            <h5 class="font-14">Ürünler</h5>
+                            <h2 class="mb-1 font-18">@Model.TotalProduct</h2>
+                            <p class="mb-0 text-small"><span class="col-blue">Menü</span> Kalemi</p>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
+                        <i class="fas fa-utensils font-26 text-info"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+            <div class="card-statistic-4">
+                <div class="row w-100 p-3 align-items-center">
+                    <div class="col-9">
+                        <div class="card-content">
+                            <h5 class="font-14">Rezervasyonlar</h5>
+                            <h2 class="mb-1 font-18">@Model.NewReservationCount</h2>
+                            <p class="mb-0 text-small"><span style="color: #e83e8c;">Yeni</span> Rezerveler</p>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
+                        <i class="fas fa-map-marker-alt font-26" style="color: #e83e8c;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+            <div class="card-statistic-4">
+                <div class="row w-100 p-3 align-items-center">
+                    <div class="col-9">
+                        <div class="card-content">
+                            <h5 class="font-14">Kategoriler</h5>
+                            <h2 class="mb-1 font-18">@Model.CategoryCount</h2>
+                            <p class="mb-0 text-small"><span class="col-purple">Grup</span> Sayısı</p>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
+                        <i class="fas fa-tags font-26" style="color: #9c27b0;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+            <div class="card-statistic-4">
+                <div class="row w-100 p-3 align-items-center">
+                    <div class="col-9">
+                        <div class="card-content">
+                            <h5 class="font-14">Etkinlikler</h5>
+                            <h2 class="mb-1 font-18">@Model.EventCount</h2>
+                            <p class="mb-0 text-small"><span class="col-red">Güncel</span> Plan</p>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
+                        <i class="fas fa-bullhorn font-26 text-danger"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+            <div class="card-statistic-4">
+                <div class="row w-100 p-3 align-items-center">
+                    <div class="col-9">
+                        <div class="card-content">
+                            <h5 class="font-14">Yorumlar</h5>
+                            <h2 class="mb-1 font-18">@Model.TestimonialCount</h2>
+                            <p class="mb-0 text-small"><span class="col-cyan">Müşteri</span> Yorumu</p>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
+                        <i class="fas fa-star font-26 text-secondary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+            <div class="card-statistic-4">
+                <div class="row w-100 p-3 align-items-center">
+                    <div class="col-9">
+                        <div class="card-content">
+                            <h5 class="font-14">Galeri</h5>
+                            <h2 class="mb-1 font-18">@Model.GalleryCount</h2>
+                            <p class="mb-0 text-small"><span style="color: #6c757d;">Görsel</span> Arşivi</p>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
+                        <i class="fas fa-images font-26" style="color: #6c757d;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+            <div class="card-statistic-4">
+                <div class="row w-100 p-3 align-items-center">
+                    <div class="col-9">
+                        <div class="card-content">
+                            <h5 class="font-14">Tüm Mesajlar</h5>
+                            <h2 class="mb-1 font-18">@Model.AllMessageCount</h2>
+                            <p class="mb-0 text-small">
+                                <span style="color: crimson;">Toplam</span> Mesaj
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
+                        <i class="fas fa-inbox font-26" style="color: crimson;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+            <div class="card-statistic-4">
+                <div class="row w-100 p-3 align-items-center">
+                    <div class="col-9">
+                        <div class="card-content">
+                            <h5 class="font-14">Okunanlar</h5>
+                            <h2 class="mb-1 font-18">@Model.IsReadTrueCount</h2>
+                            <p class="mb-0 text-small"><span class="col-green">Yanıt</span> Verildi</p>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
+                        <i class="fas fa-envelope-open-text font-26 text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+            <div class="card-statistic-4">
+                <div class="row w-100 p-3 align-items-center">
+                    <div class="col-9">
+                        <div class="card-content">
+                            <h5 class="font-14">Bekleyenler</h5>
+                            <h2 class="mb-1 font-18">@Model.UnreadMessageCount</h2>
+                            <p class="mb-0 text-small"><span class="col-orange">Cevap</span> Bekliyor</p>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
+                        <i class="fas fa-comment-dots font-26 text-warning"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="card">
+            <div class="card-statistic-4">
+                <div class="row w-100 p-3 align-items-center">
+                    <div class="col-9">
+                        <div class="card-content">
+                            <h5 class="font-14">Şefler</h5>
+                            <h2 class="mb-1 font-18">@Model.ChefCount</h2>
+                            <p class="mb-0 text-small"><span style="color: brown;">Usta</span> Kadro</p>
+                        </div>
+                    </div>
+                    <div class="col-3 text-right">
+                        <i class="fas fa-user-tie font-26" style="color: brown;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
