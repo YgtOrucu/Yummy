@@ -5,40 +5,75 @@
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
 <div class="row">
-    <div class="col-12 col-md-12 col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="section-title">İletişim Bilgisi</div>
-                <div class="table-responsive">
-                    <table class="table table-sm">
-                        <thead>
-                            <tr>
-                                <th scope="col">Adres</th>
-                                <th scope="col">Telefon</th>
-                                <th scope="col">Mail</th>
-                                <th scope="col">Açık Saatler</th>
-                                <th scope="col">Sil</th>
-                                <th scope="col">Güncele</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@item.Address</td>
-                                    <td>@item.Phone</td>
-                                    <td>@item.Email</td>
-                                    <td>@item.OpenHours</td>
-                                    <td><a asp-controller="Contact" asp-action="ContactDelete" asp-route-id="@item.ContactId" class="btn btn-danger btn-sm">Sil</a></td>
-                                    <td><a asp-controller="Contact" asp-action="ContactUpdate" asp-route-id="@item.ContactId" class="btn btn-success btn-sm">Güncelle</a></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <a asp-controller="Contact" asp-action="ContactCreate" class="btn btn-primary btn-sm">Ekle</a>
+    <div class="col-12">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+                <h4 class="text-primary m-0"><i class="fas fa-map-marked-alt mr-2"></i>İletişim & Lokasyon Ayarları</h4>
+                <a asp-controller="Contact" asp-action="ContactCreate" class="btn btn-primary btn-round @(Model.Count > 1 ? "disabled" : "")">Ekle</a>
+            </div>
+            <div class="card-body bg-light-50">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-0 shadow-sm h-100 text-center p-3">
+                                <div class="mx-auto mb-3 d-flex align-items-center justify-content-center bg-soft-primary" style="width: 60px; height: 60px; border-radius: 15px;">
+                                    <i class="fas fa-map-pin fa-2x text-primary"></i>
+                                </div>
+                                <h6 class="font-weight-bold">Restoran Konumu</h6>
+                                <p class="text-muted small">@item.Address</p>
+                                <div class="mt-auto">
+                                    <hr class="my-2">
+                                    <a asp-controller="Contact" asp-action="ContactUpdate" asp-route-id="@item.ContactId" class="btn btn-sm btn-link font-weight-bold" style="color: cadetblue;">Düzenle</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-0 shadow-sm h-100 text-center p-3">
+                                <div class="mx-auto mb-3 d-flex align-items-center justify-content-center bg-soft-success" style="width: 60px; height: 60px; border-radius: 15px;">
+                                    <i class="fas fa-phone fa-2x text-success"></i>
+                                </div>
+                                <h6 class="font-weight-bold">İrtibat Kanalları</h6>
+                                <p class="mb-0 text-dark font-weight-600">@item.Phone</p>
+                                <p class="text-muted small">@item.Email</p>
+                                <div class="mt-auto">
+                                    <hr class="my-2">
+                                    <a asp-controller="Contact" asp-action="ContactUpdate" asp-route-id="@item.ContactId" class="btn btn-sm btn-link text-success font-weight-bold">Düzenle</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-0 shadow-sm h-100 text-center p-3">
+                                <div class="mx-auto mb-3 d-flex align-items-center justify-content-center bg-soft-warning" style="width: 60px; height: 60px; border-radius: 15px;">
+                                    <i class="fas fa-clock fa-2x text-warning"></i>
+                                </div>
+                                <h6 class="font-weight-bold">Çalışma Saatleri</h6>
+                                <p class="text-muted small">Hafta içi: 09:00 - 22:00<br>Hafta sonu: 10:00 - 23:00</p>
+                                <div class="mt-auto">
+                                    <hr class="my-2">
+                                    <a asp-controller="Contact" asp-action="ContactUpdate" asp-route-id="@item.ContactId" class="btn btn-sm btn-link text-warning font-weight-bold">Düzenle</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<style>
+    .bg-soft-primary {
+        background-color: cadetblue;
+    }
+
+    .bg-soft-success {
+        background-color: lightcyan;
+    }
+
+    .bg-soft-warning {
+        background-color: rgba(255, 164, 38, 0.1);
+    }
+</style>

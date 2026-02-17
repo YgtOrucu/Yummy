@@ -4,50 +4,42 @@
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
 <div class="row">
-    <div class="col-12 col-md-12 col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="section-title">Hero Alanı</div>
+    <div class="col-12">
+        <div class="card shadow-sm border-0">
+            <div class="card-header d-flex justify-content-between align-items-center bg-white">
+                <h4 class="text-dark font-weight-bold m-0"><i class="fas fa-desktop mr-2"></i>Hero (Giriş) Yönetimi</h4>
+                <a asp-controller="Hero" asp-action="HeroCreate" class="btn btn-primary btn-round shadow-sm">
+                    <i class="fas fa-plus mr-1"></i> Yeni Hero Ekle
+                </a>
+            </div>
+            <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-sm">
-                        <thead>
+                    <table class="table table-hover mb-0">
+                        <thead class="bg-light">
                             <tr>
-                                <th scope="col">Başlık</th>
-                                <th scope="col">AltBaşlık</th>
-                                <th scope="col">Açıklama</th>
-                                <th scope="col">VideoUrl</th>
-                                <th scope="col">ImageUrl</th>
-                                <th scope="col">Sil</th>
-                                <th scope="col">Güncele</th>
+                                <th class="pl-4">Görsel</th>
+                                <th>Başlık</th>
+                                <th>Alt Başlık</th>
+                                <th class="text-center">İşlemler</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td style="align-content:center">@item.Title</td>
-                                    <td style="align-content:center">@item.SubTitle</td>
-                                    <td style="align-content:center">@item.Description</td>
-                                    <td style="align-content:center">@item.VideoUrl</td>
-                                    <td>
-                                        <img alt="Bakery item thumbnail"
-                                             src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/default-150x150.png" : item.ImageUrl)"
-                                             style="width: 3rem;height: 3rem;border-radius: 9999px;object-fit: cover;margin-left: auto;margin-right: auto;border: 2px solid #f1f5f9;" />
+                                    <td class="pl-4">
+                                        <img src="@item.ImageUrl" class="rounded shadow-sm" width="100" height="50" style="object-fit: cover; border: 1px solid #eee;">
                                     </td>
-                                    <td style="align-content:center"><a asp-controller="Hero" asp-action="HeroDelete" asp-route-id="@item.HeroId" class="btn btn-danger btn-sm">Sil</a></td>
-                                    <td style="align-content:center"><a asp-controller="Hero" asp-action="HeroUpdate" asp-route-id="@item.HeroId" class="btn btn-success btn-sm">Güncelle</a></td>
+                                    <td class="font-weight-bold">@item.Title</td>
+                                    <td>@item.SubTitle</td>
+                                    <td class="text-center">
+                                        <a asp-controller="Hero" asp-action="HeroUpdate" asp-route-id="@item.HeroId" class="btn btn-sm btn-outline-success mr-1"><i class="fas fa-edit"></i></a>
+                                        <a asp-controller="Hero" asp-action="HeroDelete" asp-route-id="@item.HeroId" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-                    @if (Model.Count > 0)
-                    {
-                        <a asp-controller="Hero" asp-action="HeroCreate" class="btn btn-primary btn-sm disabled">Ekle</a>
-                    }
-                    else
-                    {
-                        <a asp-controller="Hero" asp-action="HeroCreate" class="btn btn-primary btn-sm">Ekle</a>
-                    }
                 </div>
             </div>
         </div>

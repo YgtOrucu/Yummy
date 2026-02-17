@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using Yummy.WebAPI.Context;
@@ -11,10 +12,12 @@ namespace Yummy.WebAPI.Controllers
     public class DashboardsController : ControllerBase
     {
         private readonly YummyContext _yummyContext;
+        private readonly IMapper _mapper;
 
-        public DashboardsController(YummyContext yummyContext)
+        public DashboardsController(YummyContext yummyContext, IMapper mapper)
         {
             _yummyContext = yummyContext;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -81,6 +84,21 @@ namespace Yummy.WebAPI.Controllers
             };
 
             return Ok(statistics);
+        }
+
+
+        [HttpGet("ResultGetMessage")]
+        public async Task<IActionResult> ResultGetMessage()
+        {
+            var values = await _yummyContext.Messages.Take(4).OrderByDescending(x=>x.MessageDate).ToListAsync();
+            return Ok(_mapper.Map<List<ResultGetMessage>>(values));
+        }
+
+        [HttpGet("ResultGetChef")]
+        public IActionResult ResultGetChef()
+        {
+            var x = _yummyContext.Chefs.Include(x => x.ChefTasks).ToList();
+            return Ok(_mapper.Map<List<ResultGetChef>>(x));
         }
     }
 }

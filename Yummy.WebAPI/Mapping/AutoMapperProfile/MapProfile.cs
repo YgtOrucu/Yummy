@@ -3,6 +3,8 @@ using Yummy.WebAPI.Dtos.AboutDto;
 using Yummy.WebAPI.Dtos.CategoryDto;
 using Yummy.WebAPI.Dtos.ChefDto;
 using Yummy.WebAPI.Dtos.ContactDto;
+using Yummy.WebAPI.Dtos.DashboardDto;
+using Yummy.WebAPI.Dtos.EmployeeTaskDto;
 using Yummy.WebAPI.Dtos.FeatureDto;
 using Yummy.WebAPI.Dtos.GalleryDto;
 using Yummy.WebAPI.Dtos.HeroDto;
@@ -54,6 +56,7 @@ namespace Yummy.WebApi.Mapping.AutoMapperProfile
             CreateMap<Chef, CreateChefDto>().ReverseMap();
             CreateMap<Chef, GetChefByIdDto>().ReverseMap();
             CreateMap<Chef, UpdateChefDto>().ReverseMap();
+            CreateMap<Chef, ResultGetChef>().ForMember(desc => desc.TaskCount, opt => opt.MapFrom(src => src.ChefTasks.Count)).ReverseMap();
 
             CreateMap<Reservation, ResultReservationDto>().ReverseMap();
             CreateMap<Reservation, CreateReservationDto>().ReverseMap();
@@ -75,11 +78,17 @@ namespace Yummy.WebApi.Mapping.AutoMapperProfile
             CreateMap<Message, GetMessageByIdDto>().ReverseMap();
             CreateMap<Message, UpdateMessageDto>().ReverseMap();
             CreateMap<Message, MessageListByIsReadFalseDto>().ReverseMap();
+            CreateMap<Message, ResultGetMessage>().ReverseMap();
 
             CreateMap<YummyEvents, ResultYummyEventDto>().ReverseMap();
             CreateMap<YummyEvents, CreateYummyEventDto>().ReverseMap();
             CreateMap<YummyEvents, GetYummyEventByIdDto>().ReverseMap();
             CreateMap<YummyEvents, UpdateYummyEventDto>().ReverseMap();
+
+            CreateMap<EmployeeTask, ResultEmployeeTaskDto>().ForMember(dest => dest.ChefImageUrls, opt => opt.MapFrom(src => src.ChefTasks.Select(ct => ct.Chef.ImageUrl).ToList()));
+            CreateMap<EmployeeTask, GetEmployeeTaskByIdDto>().ForMember(dest => dest.ChefIds, opt => opt.MapFrom(src => src.ChefTasks.Select(ct => ct.ChefId).ToList()));
+            CreateMap<CreateEmployeeTaskDto, EmployeeTask>();
+            CreateMap<UpdateEmployeeTaskDto, EmployeeTask>();
         }
     }
 }

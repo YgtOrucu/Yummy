@@ -1,0 +1,79 @@
+﻿@model List<ResultEmployeeTaskDto>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Atanan Görev Listesi</h4>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Görev Adı</th>
+                            <th>Üyeler</th>
+                            <th>Görev Durumu</th>
+                            <th>Atama Tarihi</th>
+                            <th>Son Tarih</th>
+                            <th>Öncelik</th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+
+                            var statusClass = item.TaskStatus <= 30 ? "bg-success" :
+                            item.TaskStatus <= 70 ? "bg-warning" : "bg-danger";
+                            var textClass = item.TaskStatus <= 30 ? "text-success" :
+                            item.TaskStatus <= 70 ? "text-warning" : "text-danger";
+
+                            <tr>
+                                <td>@(item.TaskName)</td>
+                                <td class="text-truncate">
+                                    <ul class="list-unstyled order-list m-b-0 m-b-0">
+                                        @foreach (var img in item.ChefImageUrls.Take(3))
+                                        {
+                                            <li class="team-member team-member-sm">
+                                                <img class="rounded-circle"
+                                                     src="@img" alt="user" data-toggle="tooltip" title=""
+                                                     data-original-title="chef">
+                                            </li>
+                                        }
+                                        @if (item.ChefImageUrls.Count > 3)
+                                        {
+                                            <li class="avatar avatar-sm"><span class="badge badge-primary">+@(item.ChefImageUrls.Count - 3)</span></li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td class="align-middle">
+                                    <div class="progress-text @textClass">@(item.TaskStatus)%</div>
+                                    <div class="progress" data-height="6">
+                                        <div class="progress-bar @statusClass" data-width="@(item.TaskStatus)%"></div>
+                                    </div>
+                                </td>
+                                <td>@(item.AssignDate.ToString("dd-MMM-yyyy"))</td>
+                                <td>@(item.DueDate.ToString("dd-MMM-yyyy"))</td>
+                                <td>
+                                    @if (item.Priority == "Yüksek")
+                                    {
+                                        <div class="badge bg-danger">High</div>
+                                    }
+                                    else if (item.Priority == "Orta")
+                                    {
+                                        <div class="badge bg-warning text-dark">Average</div>
+                                    }
+                                    else if (item.Priority == "Düşük")
+                                    {
+                                        <div class="badge bg-success">Low</div>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">@item.Priority</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

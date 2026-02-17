@@ -44,6 +44,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Category}/{action=CategoryList}/{id?}");
+    pattern: "{controller=Dashboard}/{action=DashboardView}/{id?}");
 
 app.Run();

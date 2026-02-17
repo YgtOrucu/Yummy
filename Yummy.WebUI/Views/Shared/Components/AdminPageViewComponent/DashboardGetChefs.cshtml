@@ -1,0 +1,49 @@
+﻿@model List<ResultGetChef>
+
+<div class="col-md-6 col-lg-12 col-xl-6">
+    <div class="card">
+        <div style="margin-top:2rem">
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Şef</th>
+                            <th>Uzmanlık</th>
+                            <th>Görev Sayısı</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="d-flex align-items-center">
+                                    <img src="@item.ImageUrl" class="rounded-circle mr-2" width="40" height="40" style="object-fit: cover;">
+                                    <div class="d-inline-block">
+                                        <div class="font-weight-bold">@item.Name</div>
+                                    </div>
+                                </td>
+                                <td>@item.Title</td>
+                                <td class="text-center">
+                                    <span class="badge badge-light border">@item.TaskCount Görev</span>
+                                </td>
+                                <td>
+                                    @if (item.TaskCount < 4)
+                                    {
+                                        <div class="badge badge-success">Müsait</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="badge badge-danger">Meşgul</div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

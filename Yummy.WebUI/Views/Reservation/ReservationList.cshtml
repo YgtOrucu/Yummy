@@ -4,46 +4,42 @@
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
 <div class="row">
-    <div class="col-12 col-md-12 col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="section-title">Rezervasyonlar</div>
-                <div class="table-responsive">
-                    <table class="table table-sm">
-                        <thead>
+    <div class="col-12">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white">
+                <h4 class="text-dark font-weight-bold m-0"><i class="fas fa-calendar-check mr-2"></i>Rezervasyon Listesi</h4>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="pl-4">Müşteri / Kişi</th>
+                            <th>Tarih</th>
+                            <th>Mesaj</th>
+                            <th class="text-center">Durum</th>
+                            <th class="text-center">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
                             <tr>
-                                <th scope="col">İsim Soyisim</th>
-                                <th scope="col">Mail</th>
-                                <th scope="col">Telefon Numarası</th>
-                                <th scope="col">Rezervasyon Tarihi</th>
-                                <th scope="col">Rezervasyon Saatı</th>
-                                <th scope="col">Toplam Kişi Sayısı</th>
-                                <th scope="col">Mesaj</th>
-                                <th scope="col">Durum</th>
-                                <th scope="col">Sil</th>
-                                <th scope="col">Güncele</th>
+                                <td class="pl-4">
+                                    <div class="font-weight-bold">@item.Name</div>
+                                    <small class="text-muted">@item.PeopleCount Kişilik</small>
+                                </td>
+                                <td>@item.ReservationDate.ToString("dd MMM yyyy")</td>
+                                <td class="small">@item.Message</td>
+                                <td class="text-center">
+                                    <span class="badge badge-success px-3">Onaylı</span>
+                                </td>
+                                <td class="text-center">
+                                    <a asp-controller="Reservation" asp-action="ReservationDelete" asp-route-id="@item.ReservationId" class="btn btn-sm btn-danger"><i class="fas fa-times"></i></a>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@item.Name</td>
-                                    <td>@item.Email</td>
-                                    <td>@item.Phone</td>
-                                    <td>@(item.ReservationDate.ToString("dd/MM/yyyy"))</td>
-                                    <td>@item.ReservationTime</td>
-                                    <td>@item.PeopleCount</td>
-                                    <td>@item.Message</td>
-                                    <td>@(item.Status)</td>
-                                    <td><a asp-controller="Reservation" asp-action="ReservationDelete" asp-route-id="@item.ReservationId" class="btn btn-danger btn-sm">Sil</a></td>
-                                    <td><a asp-controller="Reservation" asp-action="ReservationUpdate" asp-route-id="@item.ReservationId" class="btn btn-success btn-sm">Güncelle</a></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <a asp-controller="Reservation" asp-action="ReservationCreate" class="btn btn-primary btn-sm">Ekle</a>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -3,9 +3,9 @@ using Yummy.WebAPI.Dtos.AboutDto;
 
 namespace Yummy.WebAPI.Validator.AboutValidationRules
 {
-    public class UpdateAboutValidation : AbstractValidator<UpdateAboutDto>
+    public class UpdateEmployeeTaskValidation : AbstractValidator<UpdateAboutDto>
     {
-        public UpdateAboutValidation()
+        public UpdateEmployeeTaskValidation()
         {
             RuleFor(x => x.Title).NotEmpty().WithMessage("Başlık Alanı boş bırakılamaz").
              MaximumLength(35).WithMessage("Başlık alanı maksimum 35 karakterden oluşmalıdır.").

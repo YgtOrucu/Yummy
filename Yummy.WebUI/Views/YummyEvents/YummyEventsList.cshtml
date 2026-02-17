@@ -5,42 +5,38 @@
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
 <div class="row">
-    <div class="col-12 col-md-12 col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="section-title">Eventler</div>
-                <div class="table-responsive">
-                    <table class="table table-sm">
-                        <thead>
+    <div class="col-12">
+        <div class="card shadow-sm border-0">
+            <div class="card-header d-flex justify-content-between align-items-center bg-white">
+                <h4 class="text-dark font-weight-bold m-0"><i class="fas fa-glass-cheers mr-2"></i>Etkinlik Yönetimi</h4>
+                <a asp-controller="YummyEvents" asp-action="YummyEventsCreate" class="btn btn-primary btn-round">Etkinlik Ekle</a>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="bg-light text-center">
+                        <tr>
+                            <th class="text-left pl-4">Etkinlik Adı</th>
+                            <th>Fiyat</th>
+                            <th>Güncelle / Sil</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @foreach (var item in Model)
+                        {
                             <tr>
-                                <th scope="col">Title</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">ImageUrl</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Sil</th>
-                                <th scope="col">Güncele</th>
+                                <td class="pl-4 d-flex align-items-center">
+                                    <img src="@item.ImageUrl" class="rounded-circle mr-3" width="45" height="45" style="object-fit: cover;">
+                                    <span class="font-weight-bold">@item.Title</span>
+                                </td>
+                                <td><span class="text-success font-weight-bold">@item.Price.ToString("C2")</span></td>
+                                <td>
+                                    <a asp-controller="YummyEvents" asp-action="YummyEventsUpdate" asp-route-id="@item.YummyEventsId" class="btn btn-sm btn-outline-info"><i class="fas fa-sync"></i></a>
+                                    <a asp-controller="YummyEvents" asp-action="YummyEventsDelete" asp-route-id="@item.YummyEventsId" class="btn btn-sm btn-outline-danger ml-1"><i class="fas fa-trash"></i></a>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@item.Title</td>
-                                    <td>@(item.Description.Length < 20 ? item.Description : item.Description.Substring(0, 20) + "...")</td>
-                                    <td>
-                                        <img alt="Bakery item thumbnail"
-                                             src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/default-150x150.png" : item.ImageUrl)"
-                                             style="width: 3rem;height: 3rem;border-radius: 9999px;object-fit: cover;margin-left: auto;margin-right: auto;border: 2px solid #f1f5f9;" />
-                                    </td>
-                                    <td>@(item.Price.ToString("N2") + "₺")</td>
-                                    <td><a asp-controller="YummyEvents" asp-action="YummyEventsDelete" asp-route-id="@item.YummyEventsId" class="btn btn-danger btn-sm">Sil</a></td>
-                                    <td><a asp-controller="YummyEvents" asp-action="YummyEventsUpdate" asp-route-id="@item.YummyEventsId" class="btn btn-success btn-sm">Güncelle</a></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <a asp-controller="YummyEvents" asp-action="YummyEventsCreate" class="btn btn-primary btn-sm">Ekle</a>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

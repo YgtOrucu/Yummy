@@ -4,49 +4,48 @@
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
 <div class="row">
-    <div class="col-12 col-md-12 col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="section-title">Hakkımda</div>
+    <div class="col-12">
+        <div class="card shadow-sm border-0">
+            <div class="card-header d-flex justify-content-between align-items-center bg-white">
+                <h4 class="text-dark font-weight-bold m-0"><i class="fas fa-info-circle mr-2"></i>Hakkımızda İçerikleri</h4>
+                <a asp-controller="About" asp-action="AboutCreate" class="btn btn-primary btn-round shadow-sm">
+                    <i class="fas fa-plus mr-1"></i> Yeni İçerik Ekle
+                </a>
+            </div>
+            <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-sm">
-                        <thead>
+                    <table class="table table-hover mb-0">
+                        <thead class="bg-light">
                             <tr>
-                                <th scope="col">Başlık</th>
-                                <th scope="col">Açıklama</th>
-                                <th scope="col">ImageUrl</th>
-                                <th scope="col">VideoUrl</th>
-                                <th scope="col">VideoCoverImage</th>
-                                <th scope="col">Rezervasyon Numarası</th>
-                                <th scope="col">Sil</th>
-                                <th scope="col">Güncele</th>
+                                <th class="pl-4">Görsel</th>
+                                <th>Başlık</th>
+                                <th class="pl-4">Video Cover Görsel</th>
+                                <th>Açıklama Özeti</th>
+                                <th>Telefon Numarası</th>
+                                <th class="text-center">İşlemler</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td style="align-content:center">@item.Title</td>
-                                    <td style="align-content:center">@(item.Description.Length < 20 ? item.Description : item.Description.Substring(0, 20) + "...")</td>
-                                    <td>
-                                        <img alt="default"
-                                             src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/default-150x150.png" : item.ImageUrl)"
-                                             style="width: 3rem;height: 3rem;border-radius: 9999px;object-fit: cover;margin-left: auto;margin-right: auto;border: 2px solid #f1f5f9;" />
+                                    <td class="pl-4">
+                                        <img src="@item.ImageUrl" class="rounded-circle mr-2" width="45" height="45" style="object-fit: cover;">
                                     </td>
-                                    <td style="align-content:center">@item.VideoUrl</td>
-                                    <td>
-                                        <img alt="default"
-                                             src="@(string.IsNullOrEmpty(item.VideoCoverImageUrl) ? "/images/default-150x150.png" : item.VideoCoverImageUrl)"
-                                             style="width: 3rem;height: 3rem;border-radius: 9999px;object-fit: cover;margin-left: auto;margin-right: auto;border: 2px solid #f1f5f9;" />
+                                    <td class="font-weight-bold">@item.Title</td>
+                                    <td class="pl-4">
+                                        <img src="@item.VideoCoverImageUrl" class="rounded-circle mr-2" width="45" height="45" style="object-fit: cover;">
                                     </td>
-                                    <td style="align-content:center">@item.ReservationNumber</td>
-                                    <td><a asp-controller="About" asp-action="AboutDelete" asp-route-id="@item.AboutId" class="btn btn-danger btn-sm">Sil</a></td>
-                                    <td><a asp-controller="About" asp-action="AboutUpdate" asp-route-id="@item.AboutId" class="btn btn-success btn-sm">Güncelle</a></td>
+                                    <td class="text-muted small">@(item.Description.Length > 30 ? item.Description.Substring(0, 30) + "..." : item.Description)</td>
+                                    <td class="font-weight-bold">@item.ReservationNumber</td>
+                                    <td class="text-center">
+                                        <a asp-controller="About" asp-action="AboutUpdate" asp-route-id="@item.AboutId" class="btn btn-sm btn-outline-primary"><i class="fas fa-pencil-alt"></i></a>
+                                        <a asp-controller="About" asp-action="AboutDelete" asp-route-id="@item.AboutId" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-                    <a asp-controller="About" asp-action="AboutCreate" class="btn btn-primary btn-sm">Ekle</a>
                 </div>
             </div>
         </div>

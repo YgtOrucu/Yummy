@@ -1,0 +1,40 @@
+﻿@model List<ResultGetMessage>
+
+<div class="col-md-6 col-lg-12 col-xl-6">
+    <div class="card">
+        <div class="card-body">
+            @foreach (var item in Model)
+            {
+                <div class="support-ticket media pb-1 mb-3">
+                    <div class="user-initials-avatar mr-2">
+                        @(string.IsNullOrEmpty(item.Name) ? "?" : item.Name.Substring(0, 1).ToUpper())
+                    </div>
+
+                    <div class="media-body ml-3">
+                        @{
+                            var badgeClass = item.Status == "Gelen Kutusu" ? "badge-success" :
+                            item.Status == "Analiz Bekliyor" ? "badge-warning" :
+                            item.Status == "İnceleniyor" ? "badge-primary" : "badge-info";
+                        }
+                        <div class="badge badge-pill @badgeClass mb-1 float-right">@item.Status</div>
+
+                        <span class="font-weight-bold">#@item.MessageId</span>
+                        <a href="javascript:void(0)">@item.Subject</a>
+
+                        <p class="my-1">
+                            @(item.MessageContent.Length > 50 ? item.MessageContent.Substring(0, 50) + "..." : item.MessageContent)
+                        </p>
+
+                        <small class="text-muted">
+                            Created by <span class="font-weight-bold font-13">@item.Name</span>
+                            &nbsp;&nbsp; - @item.MessageDate.ToString("dd MMM yyyy")
+                        </small>
+                    </div>
+                </div>
+            }
+        </div>
+        <a href="/Message/MessageList" class="card-footer card-link text-center small ">
+            Tümünü Görüntüle
+        </a>
+    </div>
+</div>

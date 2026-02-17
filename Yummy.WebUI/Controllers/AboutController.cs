@@ -170,6 +170,8 @@ namespace Yummy.WebUI.Controllers
                     return View(updateAboutDto);
                 }
 
+                var oldImage = await GetOldImagControlSelectAbout(updateAboutDto.AboutId);
+
                 if (updateAboutDto.ImageFileForImageUrl != null)
                 {
                     var resource = Directory.GetCurrentDirectory();
@@ -179,7 +181,6 @@ namespace Yummy.WebUI.Controllers
                     var uploadPath = Path.Combine(resource, "wwwroot", "images", "AboutImage");
                     var saveLocation = Path.Combine(uploadPath, imageName);
 
-                    var oldImage = await GetOldImagControlSelectAbout(updateAboutDto.AboutId);
                     if (!string.IsNullOrEmpty(oldImage.ImageUrl))
                     {
                         var oldImagePath = Path.Combine(
@@ -197,6 +198,11 @@ namespace Yummy.WebUI.Controllers
                     await updateAboutDto.ImageFileForImageUrl.CopyToAsync(stream);
                     updateAboutDto.ImageUrl = "/images/AboutImage/" + imageName;
                 }
+                else
+                {
+                    updateAboutDto.ImageUrl = oldImage.ImageUrl;
+                }
+
                 if (updateAboutDto.ImageFileForVideoCover != null)
                 {
                     var resource = Directory.GetCurrentDirectory();
@@ -205,8 +211,6 @@ namespace Yummy.WebUI.Controllers
 
                     var uploadPath = Path.Combine(resource, "wwwroot", "images", "AboutImage");
                     var saveLocation = Path.Combine(uploadPath, imageName);
-
-                    var oldImage = await GetOldImagControlSelectAbout(updateAboutDto.AboutId);
                     if (!string.IsNullOrEmpty(oldImage.VideoCoverImageUrl))
                     {
                         var oldImagePath = Path.Combine(
@@ -223,6 +227,10 @@ namespace Yummy.WebUI.Controllers
                     using var stream = new FileStream(saveLocation, FileMode.Create);
                     await updateAboutDto.ImageFileForVideoCover.CopyToAsync(stream);
                     updateAboutDto.VideoCoverImageUrl = "/images/AboutImage/" + imageName;
+                }
+                else
+                {
+                    updateAboutDto.VideoCoverImageUrl = oldImage.VideoCoverImageUrl;
                 }
                 var client = _httpClientFactory.CreateClient("YummyClient");  
                 var responseMessage = await client.PutAsJsonAsync("Abouts", updateAboutDto);
