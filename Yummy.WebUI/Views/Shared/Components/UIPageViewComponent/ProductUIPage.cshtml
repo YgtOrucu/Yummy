@@ -1,0 +1,43 @@
+﻿@model List<ResultProductDto>
+<div class="tab-content" data-aos="fade-up" data-aos-delay="200">
+
+    <div class="tab-pane fade active show" id="menu-all">
+        <div class="tab-header text-center">
+            <p>Menü</p>
+            <h3>Tüm Ürünler</h3>
+        </div>
+        <div class="row gy-5">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 menu-item">
+                    <a href="@(item.ImageUrl)" class="glightbox"><img src="@(item.ImageUrl)" class="menu-img img-fluid" alt=""></a>
+                    <h4>@item.ProductName</h4>
+                    <p>@item.Description</p>
+                    <p>@item.Price.ToString("C")</p>
+                </div>
+            }
+        </div>
+    </div>
+    @foreach (var group in Model.GroupBy(x => new { x.CategoryId, x.CategoryName }))
+    {
+        <div class="tab-pane fade" id="cat-@group.Key.CategoryId">
+
+            <div class="tab-header text-center">
+                <p>Menü</p>
+                <h3>@group.Key.CategoryName</h3>
+            </div>
+
+            <div class="row gy-5">
+                @foreach (var product in group)
+                {
+                    <div class="col-lg-4 menu-item">
+                        <a href="@(product.ImageUrl)" class="glightbox"><img src="@(product.ImageUrl)" class="menu-img img-fluid" alt=""></a>
+                        <h4>@product.ProductName</h4>
+                        <p>@product.Description</p>
+                        <p>@product.Price.ToString("C")</p>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

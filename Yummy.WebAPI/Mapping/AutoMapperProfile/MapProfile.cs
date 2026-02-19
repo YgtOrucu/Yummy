@@ -42,7 +42,11 @@ namespace Yummy.WebApi.Mapping.AutoMapperProfile
             CreateMap<Category, GetCategoryByIdDto>().ReverseMap();
             CreateMap<Category, UpdateCategoryDto>().ReverseMap();
 
-            CreateMap<Product, ResultProductDto>().ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName)).ReverseMap();
+            CreateMap<Product, ResultProductDto>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName))
+                .ForMember(dest => dest.DataTarget, opt => opt.MapFrom(src => src.Category.DataTarget))
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.CategoryId))
+                .ReverseMap();
             CreateMap<Product, CreateProductDto>().ReverseMap();
             CreateMap<Product, GetProductByIdDto>().ReverseMap();
             CreateMap<Product, UpdateProductDto>().ReverseMap();

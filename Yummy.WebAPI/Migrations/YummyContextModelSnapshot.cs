@@ -37,6 +37,18 @@ namespace Yummy.WebAPI.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ListDescription1")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("ListDescription2")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("ListDescription3")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar");
+
                     b.Property<string>("ReservationNumber")
                         .HasMaxLength(20)
                         .HasColumnType("varchar");
@@ -66,6 +78,10 @@ namespace Yummy.WebAPI.Migrations
 
                     b.Property<string>("CategoryName")
                         .HasMaxLength(35)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("DataTarget")
+                        .HasMaxLength(50)
                         .HasColumnType("varchar");
 
                     b.HasKey("CategoryId");

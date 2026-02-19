@@ -9,6 +9,7 @@ namespace Yummy.WebAPI.Configurations
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.Property(x => x.CategoryName).HasColumnType("varchar").HasMaxLength(35);
+            builder.Property(x => x.DataTarget).HasColumnType("varchar").HasMaxLength(50);
         }
     }
 }

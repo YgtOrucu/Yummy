@@ -15,6 +15,18 @@ namespace Yummy.WebAPI.Validator.AboutValidationRules
                 MaximumLength(250).WithMessage("Açıklama alanı maksimum 250 karakterden oluşmalıdır.").
                 MinimumLength(5).WithMessage("Açıklama alanı minimum 5 karakterden oluşmalıdır");
 
+            RuleFor(x => x.ListDescription1).NotEmpty().WithMessage("Açıklama Alanı boş bırakılamaz").
+              MaximumLength(50).WithMessage("Açıklama alanı maksimum 50 karakterden oluşmalıdır.").
+              MinimumLength(5).WithMessage("Açıklama alanı minimum 5 karakterden oluşmalıdır");
+
+            RuleFor(x => x.ListDescription2).NotEmpty().WithMessage("Açıklama Alanı boş bırakılamaz").
+               MaximumLength(50).WithMessage("Açıklama alanı maksimum 50 karakterden oluşmalıdır.").
+               MinimumLength(5).WithMessage("Açıklama alanı minimum 5 karakterden oluşmalıdır");
+
+            RuleFor(x => x.ListDescription3).NotEmpty().WithMessage("Açıklama Alanı boş bırakılamaz").
+               MaximumLength(50).WithMessage("Açıklama alanı maksimum 50 karakterden oluşmalıdır.").
+               MinimumLength(5).WithMessage("Açıklama alanı minimum 5 karakterden oluşmalıdır");
+
             RuleFor(x => x.ReservationNumber).NotEmpty().WithMessage("Rezervasyon Numarası Alanı boş bırakılamaz").
                 MaximumLength(20).WithMessage("Rezervasyon Numarası alanı maksimum 20 karakterden oluşmalıdır.").
                 MinimumLength(5).WithMessage("Rezervasyon Numarası alanı minimum 5 karakterden oluşmalıdır");

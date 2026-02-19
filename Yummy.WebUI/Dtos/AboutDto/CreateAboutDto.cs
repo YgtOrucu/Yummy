@@ -9,6 +9,9 @@
         public IFormFile? ImageFileForVideoCover { get; set; }
         public string? VideoUrl { get; set; }
         public string? Description { get; set; }
+        public string? ListDescription1 { get; set; }
+        public string? ListDescription2 { get; set; }
+        public string? ListDescription3 { get; set; }
         public string? ReservationNumber { get; set; }
     }
 }

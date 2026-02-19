@@ -10,6 +10,9 @@ namespace Yummy.WebAPI.Configurations
         {
             builder.Property(x => x.Title).HasColumnType("varchar").HasMaxLength(35);
             builder.Property(x => x.Description).HasColumnType("varchar").HasMaxLength(250);
+            builder.Property(x => x.ListDescription1).HasColumnType("varchar").HasMaxLength(50);
+            builder.Property(x => x.ListDescription2).HasColumnType("varchar").HasMaxLength(50);
+            builder.Property(x => x.ListDescription3).HasColumnType("varchar").HasMaxLength(50);
             builder.Property(x => x.ReservationNumber).HasColumnType("varchar").HasMaxLength(20);
         }
     }

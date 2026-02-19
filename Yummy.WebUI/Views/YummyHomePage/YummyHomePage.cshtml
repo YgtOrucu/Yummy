@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+@await Component.InvokeAsync("HeadUIPage")
+<body class="index-page">
+    @await Component.InvokeAsync("NavbarUIPage")
+    <main class="main">
+        @await Component.InvokeAsync("HeroUIPage")
+        @await Component.InvokeAsync("AboutUIPage")
+        @await Component.InvokeAsync("FeatureUIPage")
+        @await Component.InvokeAsync("MenuUIPage")
+        @await Component.InvokeAsync("TestimonialUIPage")
+        @await Component.InvokeAsync("YummyEventUIPage")
+        @await Component.InvokeAsync("ChefUIPage")
+        @await Component.InvokeAsync("ReservationUIPage")
+        @await Component.InvokeAsync("GalleryUIPage")
+        @await Component.InvokeAsync("ContactUIPage")
+        @await Component.InvokeAsync("FooterUIPage")
+    </main>
+</body>
+</html>
