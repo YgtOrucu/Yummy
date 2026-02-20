@@ -1,4 +1,4 @@
-﻿@* @model List<ResultYummyEventDto>
+﻿@model List<ResultYummyEventDto>
 
 <section id="events" class="events section">
     <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
@@ -33,7 +33,7 @@
                 {
                     <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url(@(item.ImageUrl))">
                         <h3>@item.Title</h3>
-                        <div class="price align-self-start">$99</div>
+                        <div class="price align-self-start">@(item.Price.ToString("C2") + "₺")</div>
                         <p class="description">
                             @(item.Description)
                         </p>
@@ -43,4 +43,4 @@
             <div class="swiper-pagination"></div>
         </div>
     </div>
-</section> *@
+</section>

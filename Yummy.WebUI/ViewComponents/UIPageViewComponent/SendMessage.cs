@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Yummy.WebUI.Dtos.MessageDto;
 
 namespace Yummy.WebUI.ViewComponents.UIPageViewComponent
 {
@@ -6,7 +7,8 @@ namespace Yummy.WebUI.ViewComponents.UIPageViewComponent
     {
         public IViewComponentResult Invoke()
         {
-            return View("~/Views/Shared/Components/UIPageViewComponent/SendMessage.cshtml");
+            var model = new CreateMessageDto();
+            return View("~/Views/Shared/Components/UIPageViewComponent/SendMessage.cshtml", model);
         }
     }
 }

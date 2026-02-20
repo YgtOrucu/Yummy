@@ -1,4 +1,4 @@
-﻿@* @model List<ResultTestimonialDto>
+﻿@model List<ResultTestimonialDto>
 <section id="testimonials" class="testimonials section light-background">
     <div class="container section-title" data-aos="fade-up">
         <h2>Yorumlar</h2>
@@ -31,10 +31,10 @@
                                     <div class="testimonial-content">
                                         <p>
                                             <i class="bi bi-quote quote-icon-left"></i>
-                                            <span>@(item.Commment)</span>
+                                            <span>@(item.Comment)</span>
                                             <i class="bi bi-quote quote-icon-right"></i>
                                         </p>
-                                        <h3>@item.NameSurname</h3>
+                                        <h3>@item.Name</h3>
                                         <h4>@item.Title</h4>
                                         <div class="stars">
                                             <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
@@ -53,4 +53,3 @@
         </div>
     </div>
 </section>
- *@

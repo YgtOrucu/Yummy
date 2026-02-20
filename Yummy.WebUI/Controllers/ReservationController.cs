@@ -129,5 +129,31 @@ namespace Yummy.WebUI.Controllers
                 return View(ex.Message);
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateReservation(CreateReservationDto createReservationDto)
+        {
+            try
+            {
+                createReservationDto.Status = "Onay Bekliyor";
+                if (!ModelState.IsValid)
+                    return View(createReservationDto);
+
+                using (var client = _httpClientFactory.CreateClient("YummyClient"))
+                {
+                    var responseMessage = await client.PostAsJsonAsync("Reservations", createReservationDto);
+
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("YummyHomePage", "YummyHomePage");
+                    }
+                    return View(createReservationDto);
+                }
+            }
+            catch (Exception ex)
+            {
+                return View(ex.Message);
+            }
+        }
     }
 }

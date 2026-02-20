@@ -1,4 +1,4 @@
-﻿@* @model List<ResultChefDto>
+﻿@model List<ResultChefDto>
 <section id="chefs" class="chefs section">
     <div class="container section-title" data-aos="fade-up">
         <h2>Şefler</h2>
@@ -6,7 +6,7 @@
     </div>
     <div class="container">
         <div class="row gy-4">
-            @foreach (var item in Model)
+            @foreach (var item in Model.Take(3))
             {
                 <div class="col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
                     <div class="team-member">
@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <div class="member-info">
-                            <h4>@(item.NameSurname)</h4>
+                            <h4>@(item.Name)</h4>
                             <span>@(item.Title)</span>
                             <p>@(item.Description)</p>
                         </div>
@@ -29,4 +29,4 @@
             }
         </div>
     </div>
-</section> *@
+</section>

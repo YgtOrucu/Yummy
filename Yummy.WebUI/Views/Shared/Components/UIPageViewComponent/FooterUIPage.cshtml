@@ -1,13 +1,18 @@
-﻿<footer id="footer" class="footer dark-background">
+﻿@model List<ResultContactDto>
+
+<footer id="footer" class="footer dark-background">
     <div class="container">
-        <div class="row gy-3">
+        @foreach(var item in Model)
+        {
+            var adresss = item.Address.Split(',');
+
+            <div class="row gy-3">
             <div class="col-lg-3 col-md-6 d-flex">
                 <i class="bi bi-geo-alt icon"></i>
                 <div class="address">
                     <h4>Adres</h4>
-                    <p>A108 Adam Sokak</p>
-                    <p>İstanbul, Türkiye</p>
-                    <p></p>
+                    <p>@adresss[0]</p>
+                    <p>@adresss[1]</p>
                 </div>
             </div>
 
@@ -16,8 +21,8 @@
                 <div>
                     <h4>İletişim</h4>
                     <p>
-                        <strong>Telefon:</strong> <span>+90 555 123 45 67</span><br>
-                        <strong>E-posta:</strong> <span>info@yummy.com</span><br>
+                        <strong>Telefon:</strong> <span>@(item.Phone)</span><br>
+                        <strong>E-posta:</strong> <span>@(item.Email)</span><br>
                     </p>
                 </div>
             </div>
@@ -27,8 +32,7 @@
                 <div>
                     <h4>Çalışma Saatleri</h4>
                     <p>
-                        <strong>Pzt - Cts:</strong> <span>11:00 - 23:00</span><br>
-                        <strong>Pazar:</strong> <span>Kapalı</span>
+                       @item.OpenHours
                     </p>
                 </div>
             </div>
@@ -42,13 +46,14 @@
                     <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
                 </div>
             </div>
-        </div>
+        </div>        
+        }
     </div>
 
     <div class="container copyright text-center mt-4">
         <p>© <span>Telif Hakkı</span> <strong class="px-1 sitename">Yummy</strong> <span>Tüm Hakları Saklıdır</span></p>
         <div class="credits">
-            Tasarım: <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            Tasarım: <a href="https://www.linkedin.com/in/yi%C4%9Fit%C3%B6r%C3%BCc%C3%BC-09214911a/">Muhsin Yiğit Örücü</a>
         </div>
     </div>
 </footer>

@@ -4,6 +4,7 @@ using MimeKit;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 using Yummy.WebUI.Dtos.MessageDto;
 using Yummy.WebUI.Dtos.OpenAIDto;
 
@@ -173,6 +174,127 @@ namespace Yummy.WebUI.Controllers
                 ViewBag.AnswerAI = $"Mesaj oluşturuluklen bir hata ile karşılaşıldı : {responseMessage.StatusCode}";
             }
             return RedirectToAction("AnswerMessageWithOpenAI", new { id = MessageId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendMessage(CreateMessageDto createMessageDto)
+        {
+            try
+            {
+                var apiKey = "";
+
+                var translatedText = await TranslateMessageAsync(createMessageDto.MessageContent, apiKey);
+                if (string.IsNullOrEmpty(translatedText)) throw new Exception("Çeviri boş döndü");
+
+                var moderationResult = await ModerateMessageAsync(translatedText, apiKey);
+                createMessageDto.Status = GetModerationStatus(moderationResult);
+                createMessageDto.MessageDate = DateTime.Now;
+                var client1 = _httpClientFactory.CreateClient("YummyClient");
+                var responseMessage = await client1.PostAsJsonAsync("Messages", createMessageDto);
+
+                if (responseMessage.IsSuccessStatusCode) return RedirectToAction("YummyHomePage", "YummyHomePage");
+
+                ViewBag.Error = "Mesaj kaydedilemedi";
+                return View("Error");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View("Error");
+            }
+        }
+
+        public async Task<string> TranslateMessageAsync(string message, string apiKey)
+        {
+            var client = _httpClientFactory.CreateClient("OpenAIClient");
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", apiKey);
+
+            var requestBody = new
+            {
+                model = "gpt-3.5-turbo",
+                messages = new[]
+                {
+                    new
+                    {
+                        role = "system",
+                        content = $"Sen profesyonel bir çevirmensin. Sadece kullanıcıdan gelen mesajı İngilizce diline çevir, giriş veya çıkış cümleleri kurma.Uzun metinleri çevirirken paragraf yapısını bozma ve akıcılığı koru."
+                    },
+                    new
+                    {
+                        role = "user",
+                        content = message
+                    }
+                },
+                temperature = 0.2
+            };
+
+            var json = JsonConvert.SerializeObject(requestBody);
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var responseMessage = await client.PostAsync("chat/completions", stringContent);
+
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var requestvalue = await responseMessage.Content.ReadFromJsonAsync<OpenAIResponse>();
+                var value = requestvalue.Choice[0].Message.Content;     
+                return value;
+            }
+            return new string("HATA");
+        }
+
+        public async Task<ModerationResult> ModerateMessageAsync(string message, string apiKey)
+        {
+            var client = _httpClientFactory.CreateClient("OpenAIClient");
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", apiKey);
+
+            var request = new { model = "omni-moderation-latest", input = message };
+            var json = System.Text.Json.JsonSerializer.Serialize(request);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("moderations", content);
+            response.EnsureSuccessStatusCode();
+
+            var responseString = await response.Content.ReadAsStringAsync();
+            var moderationResponse = System.Text.Json.JsonSerializer.Deserialize<ModerationResponse>(
+                responseString,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
+            return moderationResponse?.Results?.FirstOrDefault();
+        }
+
+        public string GetModerationStatus(ModerationResult result, double warningThreshold = 0.4, double toxicThreshold = 0.7)
+        {
+            if (result == null) return "Moderation sonucu alınamadı";
+
+            var toxicLabels = result.Category_Scores
+                .Where(x => x.Value >= toxicThreshold)
+                .Select(x => x.Key)
+                .ToList();
+
+            var warningLabels = result.Category_Scores
+                .Where(x => x.Value >= warningThreshold && x.Value < toxicThreshold)
+                .Select(x => x.Key)
+                .ToList();
+
+            if (toxicLabels.Any() && warningLabels.Any())
+            {
+                return $"Toxic mesaj. Kategoriler: {string.Join(", ", toxicLabels)}\n⚠️ Riskli Kategoriler: {string.Join(", ", warningLabels)}";
+            }
+            else if (toxicLabels.Any())
+            {
+                return $"Toxic mesaj. Kategoriler: {string.Join(", ", toxicLabels)}";
+            }
+            else if (warningLabels.Any())
+            {
+                return $"Riskli mesaj. Kategoriler: {string.Join(", ", warningLabels)}";
+            }
+            else
+            {
+                return "Mesaj temiz";
+            }
         }
 
     }

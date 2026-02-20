@@ -1,6 +1,6 @@
 ﻿@model CreateMessageDto
 
-<form asp-action="SendMessage" asp-controller="Default" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="600">
+<form asp-action="SendMessage" asp-controller="Message" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="600">
     <div class="row gy-4">
 
         <div class="col-md-6">
@@ -17,10 +17,6 @@
 
         <div class="col-md-12">
             <textarea class="form-control" asp-for="MessageContent" rows="6" placeholder="Mesajınız" required=""></textarea>
-        </div>
-
-        <div class="col-md-12">
-            <input type="date" class="form-control" asp-for="MessageDate" required="">
         </div>
 
         <div class="col-md-12 text-center">
