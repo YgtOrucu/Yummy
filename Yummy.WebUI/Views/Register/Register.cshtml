@@ -1,0 +1,145 @@
+﻿@model RegisterDto
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Yummy - Kayıt Ol</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#c48940",
+                        "primary-dark": "#8B6B4A",
+                        "background-light": "#FFF5E1",
+                        "background-alt": "#FAEBD7",
+                        "background-dark": "#1e1a14",
+                        "surface-cream": "#fdfaf5",
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .organic-shape { filter: blur(60px); z-index: 0; opacity: 0.6; }
+        .custom-focus:focus { box-shadow: 0 0 0 3px rgba(196, 137, 64, 0.2); border-color: #c48940; }
+        .validation-summary-errors ul { list-style: none; padding: 0; margin: 0; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen font-display flex flex-col">
+
+    <header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10 px-6 lg:px-20 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="text-primary">
+                    <span class="material-symbols-outlined text-3xl">restaurant</span>
+                </div>
+                <h2 class="text-slate-900 dark:text-slate-100 text-xl font-bold tracking-tight">Yummy <span class="text-primary">Eats</span></h2>
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <a class="bg-primary text-white px-6 py-2 rounded-lg font-bold hover:bg-primary-dark transition-all duration-300" href="/Login/Login">Giriş Yap</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative flex-1 flex items-center justify-center pt-24 pb-12 px-4 overflow-hidden">
+        <div class="absolute top-20 -left-20 w-80 h-80 bg-primary/20 rounded-full organic-shape"></div>
+        <div class="absolute bottom-10 -right-20 w-96 h-96 bg-primary/10 rounded-full organic-shape"></div>
+
+        <div class="relative z-10 w-full max-w-[550px] bg-white dark:bg-slate-900 shadow-2xl shadow-primary/5 border border-primary/5 rounded-xl p-8 lg:p-10">
+            <div class="text-center mb-10">
+                <h1 class="text-primary text-3xl font-bold tracking-tight mb-2">Yeni Hesap Oluştur</h1>
+                <p class="text-slate-500 dark:text-slate-400 font-medium">Lezzet dünyamıza katılmak için formu doldurun</p>
+            </div>
+
+            <form method="post" enctype="multipart/form-data" class="space-y-4">
+                
+                <div asp-validation-summary="ModelOnly" class="text-rose-500 text-sm bg-rose-50 dark:bg-rose-900/20 p-3 rounded-lg border border-rose-100 dark:border-rose-900/30 empty:hidden"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold ml-1" asp-for="Name">Adınız</label>
+                        <input asp-for="Name" class="w-full px-4 py-3 rounded-lg bg-surface-cream dark:bg-slate-800 border-slate-200 dark:border-slate-700 focus:outline-none custom-focus transition-all" placeholder="Ahmet" />
+                        <span asp-validation-for="Name" class="text-[11px] text-rose-500 font-medium ml-1"></span>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold ml-1" asp-for="Surname">Soyadınız</label>
+                        <input asp-for="Surname" class="w-full px-4 py-3 rounded-lg bg-surface-cream dark:bg-slate-800 border-slate-200 dark:border-slate-700 focus:outline-none custom-focus transition-all" placeholder="Yılmaz" />
+                        <span asp-validation-for="Surname" class="text-[11px] text-rose-500 font-medium ml-1"></span>
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold ml-1" asp-for="Email">E-posta Adresi</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">mail</span>
+                        <input asp-for="Email" class="w-full pl-12 pr-4 py-3.5 rounded-lg bg-surface-cream dark:bg-slate-800 border-slate-200 dark:border-slate-700 focus:outline-none custom-focus transition-all" placeholder="ahmet@yummy.com" />
+                    </div>
+                    <span asp-validation-for="Email" class="text-[11px] text-rose-500 font-medium ml-1"></span>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold ml-1" asp-for="UserName">Kullanıcı Adı</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">person</span>
+                        <input asp-for="UserName" class="w-full pl-12 pr-4 py-3.5 rounded-lg bg-surface-cream dark:bg-slate-800 border-slate-200 dark:border-slate-700 focus:outline-none custom-focus transition-all" placeholder="ahmetyilmaz" />
+                    </div>
+                    <span asp-validation-for="UserName" class="text-[11px] text-rose-500 font-medium ml-1"></span>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold ml-1" asp-for="ImageFile">Profil Resmi</label>
+                    <input asp-for="ImageFile" type="file" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
+                    <span asp-validation-for="ImageFile" class="text-[11px] text-rose-500 font-medium ml-1"></span>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block text-slate-700 dark:text-slate-300 text-sm font-semibold ml-1" asp-for="Password">Şifre</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">lock</span>
+                        <input asp-for="Password" type="password" class="w-full pl-12 pr-4 py-3.5 rounded-lg bg-surface-cream dark:bg-slate-800 border-slate-200 dark:border-slate-700 focus:outline-none custom-focus transition-all" placeholder="••••••••" />
+                    </div>
+                    <span asp-validation-for="Password" class="text-[11px] text-rose-500 font-medium ml-1"></span>
+                </div>
+
+                <button class="w-full bg-primary text-white py-4 rounded-lg font-bold text-lg shadow-lg shadow-primary/20 hover:bg-primary-dark hover:shadow-xl transition-all duration-300 active:scale-[0.98]" type="submit">
+                    Kayıt Ol
+                </button>
+            </form>
+
+            <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 text-center">
+                <p class="text-slate-600 dark:text-slate-400 font-medium">
+                    Zaten hesabınız var mı? 
+                    <a class="text-primary font-bold hover:underline ml-1" href="/Login/Login">Giriş Yapın</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="hidden xl:flex absolute right-20 top-1/2 -translate-y-1/2 flex-col items-center gap-4">
+            <div class="w-64 h-80 rounded-xl overflow-hidden shadow-2xl rotate-3 border-8 border-white dark:border-slate-800">
+                <img alt="Delicious Food" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=60" />
+            </div>
+            <div class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm p-4 rounded-lg shadow-xl -rotate-2 max-w-[200px] border border-primary/10 text-center">
+                <p class="text-xs font-bold text-primary uppercase tracking-widest mb-1">Haftalık Özel</p>
+                <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">Karamelli Tatlılar</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-8 px-6 text-center border-t border-primary/5 bg-background-alt dark:bg-background-dark/50">
+        <p class="text-slate-400 dark:text-slate-600 text-sm font-medium">
+            © 2026 Yummy. Tüm Hakları Saklıdır.
+        </p>
+    </footer>
+</body>
+</html>

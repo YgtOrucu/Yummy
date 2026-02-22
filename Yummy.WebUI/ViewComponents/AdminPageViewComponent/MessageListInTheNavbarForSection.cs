@@ -14,8 +14,8 @@ namespace Yummy.WebUI.ViewComponents.AdminPageViewComponent
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var client = _httpClientFactory.CreateClient();
-            var responsemessage = await client.GetAsync("https://localhost:7287/api/Messages/MessageListByIsReadFalse");
+            var client = _httpClientFactory.CreateClient("YummyClient");
+            var responsemessage = await client.GetAsync("Messages/MessageListByIsReadFalse");
             if (responsemessage.IsSuccessStatusCode)
             {
                 var JsonData = await responsemessage.Content.ReadAsStringAsync();

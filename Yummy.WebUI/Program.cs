@@ -1,11 +1,21 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Yummy.WebUI.Validator.MarkerValidationRules;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(config =>
+{
+    var polity = new AuthorizationPolicyBuilder()
+    .RequireAuthenticatedUser()
+    .Build();
+    config.Filters.Add(new AuthorizeFilter(polity));
+    config.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
+});
 builder.Services.AddHttpClient("YummyClient", client =>
 {
     var baseUrl = builder.Configuration.GetSection("ApiSettings")["BaseUrl"];
@@ -25,6 +35,14 @@ builder.Services.AddHttpClient("OpenAIClient", client =>
 });
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<MarkerValidation>();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login/Login/";
+        options.LogoutPath = "/Login/Logout/";
+        options.Cookie.Name = "YummyAuthCookie";
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,11 +57,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Dashboard}/{action=DashboardView}/{id?}");
+    pattern: "{controller=Register}/{action=Register}/{id?}");
 
 app.Run();

@@ -1,0 +1,130 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@model UpdateProfileDto
+@{
+    ViewData["Title"] = "Profil Düzenleme";
+    Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
+}
+
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="mb-8">
+        <nav class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+            <a class="hover:text-primary transition-colors" href="/Dashboard/DashboardView">Dashboard</a>
+            <span class="material-symbols-outlined text-xs">chevron_right</span>
+            <span class="text-slate-900 dark:text-slate-200 font-medium">Profilimi Düzenle</span>
+        </nav>
+        <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Profilimi Düzenle</h1>
+        <p class="mt-2 text-slate-500 dark:text-slate-400">Kişisel bilgilerinizi ve hesap güvenlik ayarlarınızı güncelleyin.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-4 space-y-6">
+            <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm text-center">
+                <div class="relative mx-auto w-40 h-40 group">
+                    <div class="w-full h-full rounded-full overflow-hidden border-4 border-slate-50 dark:border-slate-800 shadow-md">
+                        <img alt="@Model.Name" class="w-full h-full object-cover"
+                             src="@(Configuration["ApiSettings:BaseUrl"].ToString().Replace("/api", "") + Model.AvatarUrl)" />
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">@Model.Name @Model.Surname</h3>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium mt-1">@@@Model.Username</p>
+                    <p class="text-slate-400 dark:text-slate-500 text-sm mt-0.5">@Model.Email</p>
+                </div>
+                <div class="mt-8 pt-8 border-t border-slate-100 dark:border-slate-800 grid grid-cols-2 gap-4">
+                    <div class="text-left">
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Durum</p>
+                        <p class="text-sm font-medium text-emerald-500">Aktif Kullanıcı</p>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Yetki</p>
+                        <p class="text-sm font-medium text-slate-700 dark:text-slate-300">Admin</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-primary/5 dark:bg-primary/10 rounded-xl p-6 border border-primary/10">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-primary">verified_user</span>
+                    <div>
+                        <p class="text-sm font-bold text-slate-900 dark:text-white">Hesap Doğrulandı</p>
+                        <p class="text-xs text-slate-600 dark:text-slate-400">Profiliniz şu an aktif durumda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-8">
+            <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                <div class="px-8 py-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-slate-900 dark:text-white">Profil Bilgileri</h2>
+                    <span class="text-xs font-medium text-slate-400 px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded">Düzenleme Modu</span>
+                </div>
+
+                <form asp-controller="Profile" asp-action="UpdateProfile" method="post" enctype="multipart/form-data" class="p-8 space-y-8">
+                    <input type="hidden" asp-for="CurrentUsername" value="@Model.Username" />
+                    <input type="hidden" asp-for="AvatarUrl" />
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Adınız</label>
+                            <input asp-for="Name" class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary/20 focus:border-primary transition-all px-4 py-2.5 text-slate-400" type="text" />
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Soyadınız</label>
+                            <input asp-for="Surname" class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary/20 focus:border-primary transition-all px-4 py-2.5 text-slate-400" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Kullanıcı Adı</label>
+                        <input asp-for="Username" class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary/20 focus:border-primary transition-all px-4 py-2.5 text-slate-400" type="text" />
+                        <p class="text-xs text-slate-400">Bu isim profil linkinizde kullanılacaktır.</p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">E-posta Adresi</label>
+                        <input asp-for="Email" class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary/20 focus:border-primary transition-all px-4 py-2.5 text-slate-400" type="email" />
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1" asp-for="ImageFile">
+                            Profil Resmi
+                        </label>
+
+                        <input asp-for="ImageFile" type="file"
+                               class="block w-full text-sm text-slate-500
+                  file:mr-4 file:py-2.5 file:px-6
+                  file:rounded-full file:border-0
+                  file:text-xs file:font-bold file:uppercase file:tracking-wider
+                  file:bg-primary-50 file:text-primary-600
+                  hover:file:bg-primary-100
+                  dark:file:bg-primary-900/20 dark:file:text-primary-500
+                  cursor-pointer transition-all" />
+                    </div>
+
+                    <div class="pt-6 border-t border-slate-100 dark:border-slate-800">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-6">Güvenlik</h3>
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Yeni Şifre</label>
+                            <div class="relative">
+                                <input asp-for="Password" class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary/20 focus:border-primary transition-all px-4 py-2.5 pr-10 text-slate-400" placeholder="••••••••" type="password" />
+                            </div>
+                            <p class="text-xs text-slate-400">Şifrenizi değiştirmek istemiyorsanız boş bırakın.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-end gap-4 pt-4">
+                        <a href="/Dashboard/DashboardView" class="px-6 py-2.5 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
+                            İptal
+                        </a>
+                        <button class="px-8 py-2.5 bg-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all transform active:scale-[0.98]" type="submit">
+                            Değişiklikleri Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

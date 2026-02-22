@@ -7,6 +7,33 @@
     <link rel="stylesheet" href="/otika-bootstrap-admin-template/assets/css/components.css">
     <link rel="stylesheet" href="/otika-bootstrap-admin-template/assets/css/custom.css">
     <link rel='shortcut icon' type='image/x-icon' href='/otika-bootstrap-admin-templateassets/img/favicon.ico' />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1313ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101022",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
     <style>
         .card-statistic-4 {
             min-height: 130px;
@@ -19,5 +46,11 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        .form-input:focus {
+            border-color: #1313ec;
+            ring-color: rgba(19, 19, 236, 0.1);
+        }
     </style>
+
 </head>

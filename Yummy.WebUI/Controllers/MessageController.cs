@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using Yummy.WebUI.Dtos.MessageDto;
@@ -14,6 +15,7 @@ namespace Yummy.WebUI.Controllers
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
+        public string UserEmail => User.FindFirstValue(ClaimTypes.Email);
 
         public MessageController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
@@ -82,7 +84,7 @@ namespace Yummy.WebUI.Controllers
             {
                 string mailKey = _configuration["MailKitKey"];
                 var mimeMessage = new MimeMessage();
-                mimeMessage.From.Add(new MailboxAddress("Admin", "orucuyigit@gmail.com"));
+                mimeMessage.From.Add(new MailboxAddress("Admin", $"{UserEmail}"));
                 mimeMessage.To.Add(new MailboxAddress("User", ReceiverEmail));
                 mimeMessage.Subject = "Yummy Ekibi Mesaj Yanıtınız";
                 var bodybuilder = new BodyBuilder
@@ -93,7 +95,7 @@ namespace Yummy.WebUI.Controllers
 
                 using var client = new SmtpClient();
                 await client.ConnectAsync("smtp.gmail.com", 587, false);
-                await client.AuthenticateAsync("orucuyigit@gmail.com", mailKey);
+                await client.AuthenticateAsync($"{UserEmail}", mailKey);
                 await client.SendAsync(mimeMessage);
                 await client.DisconnectAsync(true);
 

@@ -6,11 +6,14 @@ using Yummy.WebAPI.Dtos.ContactDto;
 using Yummy.WebAPI.Dtos.DashboardDto;
 using Yummy.WebAPI.Dtos.EmployeeTaskDto;
 using Yummy.WebAPI.Dtos.FeatureDto;
+using Yummy.WebAPI.Dtos.ForProfileInTheAdminPageDto;
 using Yummy.WebAPI.Dtos.GalleryDto;
 using Yummy.WebAPI.Dtos.HeroDto;
+using Yummy.WebAPI.Dtos.LoginDto;
 using Yummy.WebAPI.Dtos.MessageDto;
 using Yummy.WebAPI.Dtos.MessageDto.MessageDtoForAdminThema.MessageListForNavbarSection;
 using Yummy.WebAPI.Dtos.ProductDto;
+using Yummy.WebAPI.Dtos.ProfileDto;
 using Yummy.WebAPI.Dtos.ReservationDto;
 using Yummy.WebAPI.Dtos.TestimonialDto;
 using Yummy.WebAPI.Dtos.YummyEventsDto;
@@ -91,8 +94,15 @@ namespace Yummy.WebApi.Mapping.AutoMapperProfile
 
             CreateMap<EmployeeTask, ResultEmployeeTaskDto>().ForMember(dest => dest.ChefImageUrls, opt => opt.MapFrom(src => src.ChefTasks.Select(ct => ct.Chef.ImageUrl).ToList()));
             CreateMap<EmployeeTask, GetEmployeeTaskByIdDto>().ForMember(dest => dest.ChefIds, opt => opt.MapFrom(src => src.ChefTasks.Select(ct => ct.ChefId).ToList()));
-            CreateMap<CreateEmployeeTaskDto, EmployeeTask>();
-            CreateMap<UpdateEmployeeTaskDto, EmployeeTask>();
+            CreateMap<EmployeeTask, CreateEmployeeTaskDto>();
+            CreateMap<EmployeeTask, UpdateEmployeeTaskDto>();
+
+            CreateMap<AppUser, RegisterDto>()
+                .ForMember(dest => dest.ImageFile, opt => opt.Ignore())
+                .ReverseMap()
+                .ForMember(dest => dest.AvatarUrl, opt => opt.Ignore());
+            CreateMap<AppUser, ProfileDto>();
+            CreateMap<AppUser, UpdateProfileDto>().ForMember(dest => dest.CurrentUsername, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
         }
     }
 }
