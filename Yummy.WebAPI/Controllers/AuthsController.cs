@@ -100,8 +100,8 @@ namespace Yummy.WebAPI.Controllers
         {
             var user = await _userManager.FindByNameAsync(updateProfileDto.CurrentUsername);
             if (user == null) return NotFound("Kullanıcı bulunamadı.");
-            _mapper.Map(updateProfileDto, user);
 
+            _mapper.Map(updateProfileDto, user);
 
             if (updateProfileDto.ImageFile != null)
             {
@@ -130,15 +130,19 @@ namespace Yummy.WebAPI.Controllers
                 }
                 user.AvatarUrl = "/images/LoginUserImage/" + imageName;
             }
+
             if (!string.IsNullOrEmpty(updateProfileDto.Password))
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var passwordResult = await _userManager.ResetPasswordAsync(user, token, updateProfileDto.Password);
-                if (!passwordResult.Succeeded) return BadRequest(passwordResult.Errors);
+                await _userManager.ResetPasswordAsync(user, token, updateProfileDto.Password);
             }
 
             var result = await _userManager.UpdateAsync(user);
-            if (result.Succeeded) return Ok("Profil başarıyla güncellendi.");
+            if (result.Succeeded)
+            {
+                await _userManager.UpdateSecurityStampAsync(user);
+                return Ok("Profil başarıyla güncellendi.");
+            }
 
             return BadRequest(result.Errors);
         }

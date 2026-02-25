@@ -33,20 +33,21 @@ namespace Yummy.WebUI.Controllers
         public async Task<IActionResult> UpdateProfile(UpdateProfileDto updateProfileDto)
         {
             var client = _httpClientFactory.CreateClient("YummyClient");
+            var content = new MultipartFormDataContent();
 
-            using var content = new MultipartFormDataContent();
-            content.Add(new StringContent(updateProfileDto.Username), "Username");
-            content.Add(new StringContent(updateProfileDto.Name), "Name");
-            content.Add(new StringContent(updateProfileDto.Surname), "Surname");
-            content.Add(new StringContent(updateProfileDto.Email), "Email");
+            content.Add(new StringContent(updateProfileDto.UserName ?? ""), "Username");
+            content.Add(new StringContent(updateProfileDto.Name ?? ""), "Name");
+            content.Add(new StringContent(updateProfileDto.Surname ?? ""), "Surname");
+            content.Add(new StringContent(updateProfileDto.Email ?? ""), "Email");
+            content.Add(new StringContent(updateProfileDto.CurrentUsername ?? ""), "CurrentUsername");
 
-            if (updateProfileDto.Password != null)
+            if (!string.IsNullOrEmpty(updateProfileDto.Password))
                 content.Add(new StringContent(updateProfileDto.Password), "Password");
 
             if (updateProfileDto.ImageFile != null)
             {
-                var fileContent = new StreamContent(updateProfileDto.ImageFile.OpenReadStream());
-                content.Add(fileContent, "ImageFile", updateProfileDto.ImageFile.FileName);
+                var streamContent = new StreamContent(updateProfileDto.ImageFile.OpenReadStream());
+                content.Add(streamContent, "ImageFile", updateProfileDto.ImageFile.FileName);
             }
 
             var response = await client.PutAsync("Auths/UpdateProfile", content);
@@ -54,8 +55,6 @@ namespace Yummy.WebUI.Controllers
             if (response.IsSuccessStatusCode)
             {
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-                TempData["EditProfileMessage"] = "Profil bilgileriniz güncellendi. Lütfen yeni bilgilerinizle tekrar giriş yapın.";
-
                 return RedirectToAction("Login", "Login");
             }
 

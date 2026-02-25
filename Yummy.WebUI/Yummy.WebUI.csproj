@@ -19,7 +19,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.23" />
 	  <PackageReference Include="MailKit" Version="4.15.0" />
-	  <PackageReference Include="MimeKit" Version="4.15.0" />
   </ItemGroup>
 
   <ItemGroup>

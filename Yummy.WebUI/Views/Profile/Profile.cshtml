@@ -6,120 +6,85 @@
     Layout = "~/Views/AdminLayout/AdminLayout.cshtml";
 }
 
+<main style="max-width: 1200px; margin: 0 auto; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div style="display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start;">
 
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-    <div class="mb-8">
-        <nav class="flex items-center gap-2 text-sm text-slate-500 mb-4">
-            <a class="hover:text-primary transition-colors" href="/Dashboard/DashboardView">Dashboard</a>
-            <span class="material-symbols-outlined text-xs">chevron_right</span>
-            <span class="text-slate-900 dark:text-slate-200 font-medium">Profilimi Düzenle</span>
-        </nav>
-        <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Profilimi Düzenle</h1>
-        <p class="mt-2 text-slate-500 dark:text-slate-400">Kişisel bilgilerinizi ve hesap güvenlik ayarlarınızı güncelleyin.</p>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        <div class="lg:col-span-4 space-y-6">
-            <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm text-center">
-                <div class="relative mx-auto w-40 h-40 group">
-                    <div class="w-full h-full rounded-full overflow-hidden border-4 border-slate-50 dark:border-slate-800 shadow-md">
-                        <img alt="@Model.Name" class="w-full h-full object-cover"
+        <div style="flex: 1; min-width: 300px;">
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 32px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                <div style="position: relative; width: 160px; height: 160px; margin: 0 auto;">
+                    <div style="width: 100%; height: 100%; rounded: 50%; overflow: hidden; border: 4px solid #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 100px;">
+                        <img alt="@Model.Name" style="width: 100%; height: 100%; object-fit: cover;"
                              src="@(Configuration["ApiSettings:BaseUrl"].ToString().Replace("/api", "") + Model.AvatarUrl)" />
                     </div>
                 </div>
-                <div class="mt-6">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">@Model.Name @Model.Surname</h3>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium mt-1">@@@Model.Username</p>
-                    <p class="text-slate-400 dark:text-slate-500 text-sm mt-0.5">@Model.Email</p>
+                <div style="margin-top: 24px;">
+                    <h3 style="font-size: 20px; font-weight: 700; color: #0f172a; margin: 0;">@Model.Name @Model.Surname</h3>
+                    <p style="color: #64748b; font-size: 14px; margin: 4px 0;">@@@Model.UserName</p>
+                    <p style="color: #94a3b8; font-size: 14px; margin: 0;">@Model.Email</p>
                 </div>
-                <div class="mt-8 pt-8 border-t border-slate-100 dark:border-slate-800 grid grid-cols-2 gap-4">
-                    <div class="text-left">
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Durum</p>
-                        <p class="text-sm font-medium text-emerald-500">Aktif Kullanıcı</p>
+                <div style="margin-top: 32px; padding-top: 32px; border-top: 1px solid #f1f5f9; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div style="text-align: left;">
+                        <p style="font-size: 11px; font-weight: 600; color: #94a3b8; text-transform: uppercase; margin: 0 0 4px 0;">Durum</p>
+                        <p style="font-size: 14px; font-weight: 500; color: #10b981; margin: 0;">Aktif Kullanıcı</p>
                     </div>
-                    <div class="text-left">
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Yetki</p>
-                        <p class="text-sm font-medium text-slate-700 dark:text-slate-300">Admin</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-primary/5 dark:bg-primary/10 rounded-xl p-6 border border-primary/10">
-                <div class="flex items-center gap-3">
-                    <span class="material-symbols-outlined text-primary">verified_user</span>
-                    <div>
-                        <p class="text-sm font-bold text-slate-900 dark:text-white">Hesap Doğrulandı</p>
-                        <p class="text-xs text-slate-600 dark:text-slate-400">Profiliniz şu an aktif durumda.</p>
+                    <div style="text-align: left;">
+                        <p style="font-size: 11px; font-weight: 600; color: #94a3b8; text-transform: uppercase; margin: 0 0 4px 0;">Yetki</p>
+                        <p style="font-size: 14px; font-weight: 500; color: #475569; margin: 0;">Admin</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="lg:col-span-8">
-            <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
-                <div class="px-8 py-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                    <h2 class="text-lg font-bold text-slate-900 dark:text-white">Profil Bilgileri</h2>
-                    <span class="text-xs font-medium text-slate-400 px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded">Düzenleme Modu</span>
+        <div style="flex: 2; min-width: 350px;">
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); overflow: hidden;">
+                <div style="padding: 24px 32px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 0;">Profil Bilgileri</h2>
+                    <span style="font-size: 12px; background: #f1f5f9; padding: 4px 12px; border-radius: 6px; color: #64748b; font-weight: 500;">Düzenleme Modu</span>
                 </div>
 
-                <form asp-controller="Profile" asp-action="UpdateProfile" method="post" enctype="multipart/form-data" class="p-8 space-y-8">
-                    <input type="hidden" asp-for="CurrentUsername" value="@Model.Username" />
+                <form asp-controller="Profile" asp-action="UpdateProfile" method="post" enctype="multipart/form-data" style="padding: 32px;">
+                    <input type="hidden" asp-for="CurrentUsername" value="@Model.UserName" />
                     <input type="hidden" asp-for="AvatarUrl" />
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Adınız</label>
-                            <input asp-for="Name" class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary/20 focus:border-primary transition-all px-4 py-2.5 text-slate-400" type="text" />
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 24px;">
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <label style="font-size: 14px; font-weight: 600; color: #334155;">Adınız</label>
+                            <input asp-for="Name" style="padding: 10px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px;" type="text" />
                         </div>
-                        <div class="space-y-2">
-                            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Soyadınız</label>
-                            <input asp-for="Surname" class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary/20 focus:border-primary transition-all px-4 py-2.5 text-slate-400" type="text" />
-                        </div>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Kullanıcı Adı</label>
-                        <input asp-for="Username" class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary/20 focus:border-primary transition-all px-4 py-2.5 text-slate-400" type="text" />
-                        <p class="text-xs text-slate-400">Bu isim profil linkinizde kullanılacaktır.</p>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">E-posta Adresi</label>
-                        <input asp-for="Email" class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary/20 focus:border-primary transition-all px-4 py-2.5 text-slate-400" type="email" />
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1" asp-for="ImageFile">
-                            Profil Resmi
-                        </label>
-
-                        <input asp-for="ImageFile" type="file"
-                               class="block w-full text-sm text-slate-500
-                  file:mr-4 file:py-2.5 file:px-6
-                  file:rounded-full file:border-0
-                  file:text-xs file:font-bold file:uppercase file:tracking-wider
-                  file:bg-primary-50 file:text-primary-600
-                  hover:file:bg-primary-100
-                  dark:file:bg-primary-900/20 dark:file:text-primary-500
-                  cursor-pointer transition-all" />
-                    </div>
-
-                    <div class="pt-6 border-t border-slate-100 dark:border-slate-800">
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-6">Güvenlik</h3>
-                        <div class="space-y-2">
-                            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Yeni Şifre</label>
-                            <div class="relative">
-                                <input asp-for="Password" class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary/20 focus:border-primary transition-all px-4 py-2.5 pr-10 text-slate-400" placeholder="••••••••" type="password" />
-                            </div>
-                            <p class="text-xs text-slate-400">Şifrenizi değiştirmek istemiyorsanız boş bırakın.</p>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <label style="font-size: 14px; font-weight: 600; color: #334155;">Soyadınız</label>
+                            <input asp-for="Surname" style="padding: 10px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px;" type="text" />
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-end gap-4 pt-4">
-                        <a href="/Dashboard/DashboardView" class="px-6 py-2.5 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
-                            İptal
-                        </a>
-                        <button class="px-8 py-2.5 bg-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all transform active:scale-[0.98]" type="submit">
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px;">
+                        <label style="font-size: 14px; font-weight: 600; color: #334155;">Kullanıcı Adı</label>
+                        <input asp-for="UserName" style="padding: 10px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px;" type="text" />
+                        <p style="font-size: 12px; color: #94a3b8; margin: 0;">Bu isim profil linkinizde kullanılacaktır.</p>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px;">
+                        <label style="font-size: 14px; font-weight: 600; color: #334155;">E-posta Adresi</label>
+                        <input asp-for="Email" style="padding: 10px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px;" type="email" />
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px;">
+                        <label style="font-size: 14px; font-weight: 600; color: #334155;">Profil Resmi</label>
+                        <input asp-for="ImageFile" type="file" style="font-size: 14px; color: #64748b;" />
+                    </div>
+
+                    <div style="margin-top: 32px; padding-top: 32px; border-top: 1px solid #f1f5f9;">
+                        <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 16px;">Güvenlik</h3>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <label style="font-size: 14px; font-weight: 600; color: #334155;">Yeni Şifre</label>
+                            <input asp-for="Password" style="padding: 10px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px;" placeholder="••••••••" type="password" />
+                            <p style="font-size: 12px; color: #94a3b8; margin: 0;">Şifrenizi değiştirmek istemiyorsanız boş bırakın.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end; align-items: center; gap: 16px; margin-top: 32px;">
+                        <a href="/Dashboard/DashboardView" style="text-decoration: none; font-size: 14px; font-weight: 600; color: #64748b;">İptal</a>
+                        <button type="submit" style="background: #f59e0b; color: white; padding: 12px 32px; border-radius: 12px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; box-shadow: 0 4px 6px rgba(245, 158, 11, 0.2);">
                             Değişiklikleri Kaydet
                         </button>
                     </div>

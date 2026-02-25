@@ -102,7 +102,13 @@ namespace Yummy.WebApi.Mapping.AutoMapperProfile
                 .ReverseMap()
                 .ForMember(dest => dest.AvatarUrl, opt => opt.Ignore());
             CreateMap<AppUser, ProfileDto>();
-            CreateMap<AppUser, UpdateProfileDto>().ForMember(dest => dest.CurrentUsername, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
+            CreateMap<AppUser, UpdateProfileDto>()
+                .ForMember(dest => dest.CurrentUsername, opt => opt.MapFrom(src => src.UserName));
+
+            CreateMap<UpdateProfileDto, AppUser>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
+                .ForMember(dest => dest.AvatarUrl, opt => opt.Ignore())
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
         }
     }
 }
