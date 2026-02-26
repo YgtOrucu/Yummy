@@ -1,5 +1,6 @@
 ﻿namespace Yummy.WebAPI.Dtos.AboutDto
 {
+
     public class CreateAboutDto
     {
         public string? Title { get; set; }
@@ -12,4 +13,5 @@
         public string? ListDescription3 { get; set; }
         public string? ReservationNumber { get; set; }
     }
+
 }

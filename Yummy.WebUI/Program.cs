@@ -25,7 +25,6 @@ builder.Services.AddHttpClient("YummyClient", client =>
 
     client.BaseAddress = new Uri(baseUrl);
 });
-
 builder.Services.AddHttpClient("OpenAIClient", client =>
 {
     var baseUrl = builder.Configuration.GetSection("OpenAIAddress")["AIUrl"];
@@ -45,8 +44,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

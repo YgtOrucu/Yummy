@@ -7,6 +7,7 @@ namespace Yummy.WebUI.Validator.AboutValidationRules
     {
         public CreateAboutValidation()
         {
+
             RuleFor(x => x.Title).NotEmpty().WithMessage("Başlık Alanı boş bırakılamaz").
                 MaximumLength(35).WithMessage("Başlık alanı maksimum 35 karakterden oluşmalıdır.").
                 MinimumLength(5).WithMessage("Başlık alanı minimum 5 karakterden oluşmalıdır");

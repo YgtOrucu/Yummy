@@ -6,6 +6,7 @@ namespace Yummy.WebAPI.Configurations
 {
     public class AboutConfiguration : IEntityTypeConfiguration<About>
     {
+
         public void Configure(EntityTypeBuilder<About> builder)
         {
             builder.Property(x => x.Title).HasColumnType("varchar").HasMaxLength(35);

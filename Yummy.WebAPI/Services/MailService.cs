@@ -13,18 +13,16 @@ namespace Yummy.WebAPI.Services
         {
             _mailSettings = mailSettings.Value;
         }
-
         public async Task SendEmailAsync(string email, string subject, string message)
         {
-            var mimeMessage = new MimeMessage();
 
+            var mimeMessage = new MimeMessage();
             mimeMessage.From.Add(new MailboxAddress(_mailSettings.SenderName, _mailSettings.SenderEmail));
             mimeMessage.To.Add(new MailboxAddress("Kullanıcı", email));
             mimeMessage.Subject = subject;
 
             var bodyBuilder = new BodyBuilder { TextBody = message };
             mimeMessage.Body = bodyBuilder.ToMessageBody();
-
             using (var client = new SmtpClient())
             {
                 await client.ConnectAsync(_mailSettings.Server, _mailSettings.Port, false);

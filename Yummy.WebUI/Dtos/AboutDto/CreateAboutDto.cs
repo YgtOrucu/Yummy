@@ -2,6 +2,7 @@
 {
     public class CreateAboutDto
     {
+
         public string? Title { get; set; }
         public string? ImageUrl { get; set; }
         public IFormFile? ImageFileForImageUrl { get; set; }
@@ -13,5 +14,6 @@
         public string? ListDescription2 { get; set; }
         public string? ListDescription3 { get; set; }
         public string? ReservationNumber { get; set; }
+
     }
 }

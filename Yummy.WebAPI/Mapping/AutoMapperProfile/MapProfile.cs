@@ -109,6 +109,7 @@ namespace Yummy.WebApi.Mapping.AutoMapperProfile
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
                 .ForMember(dest => dest.AvatarUrl, opt => opt.Ignore())
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+
         }
     }
 }

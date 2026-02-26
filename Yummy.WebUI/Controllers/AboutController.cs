@@ -11,7 +11,6 @@ namespace Yummy.WebUI.Controllers
         {
             _httpClientFactory = httpClientFactory;
         }
-
         public async Task<IActionResult> AboutList()
         {
             try

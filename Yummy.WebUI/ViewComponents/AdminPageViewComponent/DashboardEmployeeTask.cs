@@ -14,6 +14,7 @@ namespace Yummy.WebUI.ViewComponents.AdminPageViewComponent
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+
             var client = _httpClientFactory.CreateClient("YummyClient");
             var responseMessage = await client.GetAsync("EmployeeTasks");
             if(responseMessage.IsSuccessStatusCode)
