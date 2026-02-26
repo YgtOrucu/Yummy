@@ -27,6 +27,7 @@ namespace Yummy.WebAPI.Controllers
             return Ok(_mapper.Map<List<ResultAboutDto>>(values));
         }
         [HttpPost]
+
         public async Task<IActionResult> AboutCreate(CreateAboutDto createAboutDto)
         {
             var values = _mapper.Map<About>(createAboutDto);
@@ -34,6 +35,7 @@ namespace Yummy.WebAPI.Controllers
             await _yummyContext.SaveChangesAsync();
             return Ok("Ekleme işlemi başarılı");
         }
+
         [HttpDelete]
         public async Task<IActionResult> AboutDelete(int id)
         {
