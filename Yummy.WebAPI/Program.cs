@@ -6,6 +6,8 @@ using Yummy.WebAPI.Validator.MarkerValidationRules;
 using Yummy.WebAPI.Entities;
 using Yummy.WebAPI.Model;
 using Microsoft.AspNetCore.Identity;
+using Yummy.WebAPI.Configurations;
+using Yummy.WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,8 @@ builder.Services.AddIdentity<AppUser, AppRole>(opt =>
 .AddEntityFrameworkStores<YummyContext>()
 .AddErrorDescriber<TurkishIdentityErrorDescriber>()
 .AddDefaultTokenProviders();
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddScoped<IMailService, MailService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

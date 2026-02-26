@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Yummy.WebAPI.Dtos.ForProfileInTheAdminPageDto;
 using Yummy.WebAPI.Dtos.LoginDto;
 using Yummy.WebAPI.Dtos.ProfileDto;
+using Yummy.WebAPI.Dtos.ResetPasswordDto;
+using Yummy.WebAPI.Dtos.VerifyCodeDto;
 using Yummy.WebAPI.Entities;
+using Yummy.WebAPI.Services;
 
 namespace Yummy.WebAPI.Controllers
 {
@@ -15,12 +18,14 @@ namespace Yummy.WebAPI.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IMapper _mapper;
+        private readonly IMailService _mailService;
 
-        public AuthsController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IMapper mapper)
+        public AuthsController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IMapper mapper, IMailService mailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
+            _mailService = mailService;
         }
 
         [HttpPost("Register")]
@@ -59,16 +64,63 @@ namespace Yummy.WebAPI.Controllers
 
                 if (result.Succeeded)
                 {
-                    return Ok(new
+
+                    if (!user.EmailConfirmed)
                     {
-                        Message = "Giriş Başarılı",
-                        Username = user.UserName,
-                        NameSurname = user.Name + " " + user.Surname,
-                        Email = user.Email
-                    });
+                        var random = new Random();
+                        var confirmcode = random.Next(100000, 999999);
+                        user.ConfirmCode = confirmcode;
+                        await _userManager.UpdateAsync(user);
+
+                        string subject = "Yummy - Giriş Doğrulama Kodu";
+                        string message = $"Merhaba {user.Name}, giriş yapmak için onay kodunuz: {confirmcode}";
+                        await _mailService.SendEmailAsync(user.Email, subject, message);
+
+                        return Ok(new
+                        {
+                            RequiresConfirmation = true,
+                            Message = "Doğrulama kodu mail adresinize gönderildi.",
+                            Email = user.Email
+                        });
+
+                    }
+                    else
+                    {
+                        return Ok(new
+                        {
+                            RequiresConfirmation = false,
+                            Username = user.UserName,
+                            Email = user.Email,
+                            NameSurname = user.Name + " " + user.Surname
+                        });
+                    }
                 }
             }
             return BadRequest("Kullanıcı adı veya şifre hatalı");
+        }
+
+        [HttpPost("VerifyCode")]
+        public async Task<IActionResult> VerifyCode(VerifyCode verifycode)
+        {
+            var user = await _userManager.FindByEmailAsync(verifycode.Email);
+
+            if (user != null && user.ConfirmCode == verifycode.Code)
+            {
+                user.ConfirmCode = 0;
+                user.EmailConfirmed = true;
+                user.TwoFactorEnabled = true;
+                await _userManager.UpdateAsync(user);
+
+                return Ok(new
+                {
+                    Status = true,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    NameSurname = user.Name + " " + user.Surname,
+                });
+            }
+
+            return BadRequest("Girdiğiniz kod hatalı veya süresi dolmuş.");
         }
 
         [HttpGet("GetProfileNavbarSection")]
@@ -145,6 +197,49 @@ namespace Yummy.WebAPI.Controllers
             }
 
             return BadRequest(result.Errors);
+        }
+
+        [HttpPost("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return BadRequest("Bu e-posta adresi ile kayıtlı bir kullanıcı bulunamadı.");
+            }
+
+            var random = new Random();
+            int resetCode = random.Next(100000, 999999);
+            user.ConfirmCode = resetCode;
+            await _userManager.UpdateAsync(user);
+
+            string subject = "Yummy - Şifre Sıfırlama Kodu";
+            string message = $"Merhaba {user.Name}, şifrenizi sıfırlamak için onay kodunuz: {resetCode}";
+
+            await _mailService.SendEmailAsync(user.Email, subject, message);
+
+            return Ok(new { Message = "Sıfırlama kodu başarıyla gönderildi." });
+        }
+
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPassword resetDto)
+        {
+            var user = await _userManager.FindByEmailAsync(resetDto.Email);
+            if (user == null || user.ConfirmCode != resetDto.Code)
+            {
+                return BadRequest("Doğrulama kodu hatalı veya geçersiz.");
+            }
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, token, resetDto.NewPassword);
+
+            if (result.Succeeded)
+            {
+                user.ConfirmCode = 0;
+                await _userManager.UpdateAsync(user);
+                return Ok(new { Message = "Şifre başarıyla güncellendi." });
+            }
+
+            return BadRequest("Şifre güncellenirken bir hata oluştu.");
         }
 
         [HttpPost("Logout")]
