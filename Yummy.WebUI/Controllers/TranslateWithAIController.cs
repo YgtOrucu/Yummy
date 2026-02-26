@@ -9,10 +9,13 @@ namespace Yummy.WebUI.Controllers
     public class TranslateWithAIController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration;
+        public string APIKEY => _configuration["APIKEY"];
 
-        public TranslateWithAIController(IHttpClientFactory httpClientFactory)
+        public TranslateWithAIController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -23,10 +26,9 @@ namespace Yummy.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTranslate(string prompt, string targetLanguage)
         {
-            var ApıKey = "";
 
             var client = _httpClientFactory.CreateClient("OpenAIClient");
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApıKey);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", APIKEY);
 
             var requestBody = new
             {

@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
+using Yummy.WebAPI.Services;
 using Yummy.WebUI.Dtos.MessageDto;
 using Yummy.WebUI.Dtos.OpenAIDto;
 
@@ -16,6 +17,7 @@ namespace Yummy.WebUI.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         public string UserEmail => User.FindFirstValue(ClaimTypes.Email);
+        public string APIKEY => _configuration["APIKEY"];
 
         public MessageController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
@@ -136,9 +138,8 @@ namespace Yummy.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> GenerateAIDraft(int MessageId, string CustomerMessage, string CustomerName, string CustomerSubject)
         {
-            var Apıkey = "";
             var client = _httpClientFactory.CreateClient("OpenAIClient");
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Apıkey);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", APIKEY);
 
             var RequestBody = new
             {
@@ -183,12 +184,11 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
-                var apiKey = "";
 
-                var translatedText = await TranslateMessageAsync(createMessageDto.MessageContent, apiKey);
+                var translatedText = await TranslateMessageAsync(createMessageDto.MessageContent, APIKEY);
                 if (string.IsNullOrEmpty(translatedText)) throw new Exception("Çeviri boş döndü");
 
-                var moderationResult = await ModerateMessageAsync(translatedText, apiKey);
+                var moderationResult = await ModerateMessageAsync(translatedText, APIKEY);
                 createMessageDto.Status = GetModerationStatus(moderationResult);
                 createMessageDto.MessageDate = DateTime.Now;
                 var client1 = _httpClientFactory.CreateClient("YummyClient");
@@ -206,11 +206,11 @@ namespace Yummy.WebUI.Controllers
             }
         }
 
-        public async Task<string> TranslateMessageAsync(string message, string apiKey)
+        public async Task<string> TranslateMessageAsync(string message, string APIKEY)
         {
             var client = _httpClientFactory.CreateClient("OpenAIClient");
             client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", apiKey);
+                new AuthenticationHeaderValue("Bearer", APIKEY);
 
             var requestBody = new
             {
@@ -245,11 +245,11 @@ namespace Yummy.WebUI.Controllers
             return new string("HATA");
         }
 
-        public async Task<ModerationResult> ModerateMessageAsync(string message, string apiKey)
+        public async Task<ModerationResult> ModerateMessageAsync(string message, string APIKEY)
         {
             var client = _httpClientFactory.CreateClient("OpenAIClient");
             client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", apiKey);
+                new AuthenticationHeaderValue("Bearer", APIKEY);
 
             var request = new { model = "omni-moderation-latest", input = message };
             var json = System.Text.Json.JsonSerializer.Serialize(request);
@@ -283,19 +283,19 @@ namespace Yummy.WebUI.Controllers
 
             if (toxicLabels.Any() && warningLabels.Any())
             {
-                return $"Toxic mesaj. Kategoriler: {string.Join(", ", toxicLabels)}\n⚠️ Riskli Kategoriler: {string.Join(", ", warningLabels)}";
+                return $"Toxic ve Riskli mesaj";
             }
             else if (toxicLabels.Any())
             {
-                return $"Toxic mesaj. Kategoriler: {string.Join(", ", toxicLabels)}";
+                return $"Toxic mesaj";
             }
             else if (warningLabels.Any())
             {
-                return $"Riskli mesaj. Kategoriler: {string.Join(", ", warningLabels)}";
+                return $"Riskli mesaj";
             }
             else
             {
-                return "Mesaj temiz";
+                return "Mesaj Temiz";
             }
         }
 

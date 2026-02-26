@@ -12,9 +12,10 @@
 
                     <div class="media-body ml-3">
                         @{
-                            var badgeClass = item.Status == "Gelen Kutusu" ? "badge-success" :
-                            item.Status == "Analiz Bekliyor" ? "badge-warning" :
-                            item.Status == "İnceleniyor" ? "badge-primary" : "badge-info";
+                            var badgeClass = item.Status == "Mesaj Temiz" ? "badge-success" :
+                            item.Status == "Riskli mesaj" ? "badge-warning" :
+                            (item.Status == "Toxic mesaj" || item.Status == "Toxic ve Riskli mesaj") ? "badge-danger" :
+                            "badge-secondary";
                         }
                         <div class="badge badge-pill @badgeClass mb-1 float-right">@item.Status</div>
 

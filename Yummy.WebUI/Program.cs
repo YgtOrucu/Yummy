@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Yummy.WebAPI.Services;
 using Yummy.WebUI.Validator.MarkerValidationRules;
 
 var builder = WebApplication.CreateBuilder(args);

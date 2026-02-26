@@ -9,10 +9,13 @@ namespace Yummy.WebUI.Controllers
     public class RecipeWithAIController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration;
+        public string APIKEY => _configuration["APIKEY"];
 
-        public RecipeWithAIController(IHttpClientFactory httpClientFactory)
+        public RecipeWithAIController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -26,10 +29,9 @@ namespace Yummy.WebUI.Controllers
         {
             try
             {
-                var ApıKey = "";
                 var client = _httpClientFactory.CreateClient("OpenAIClient");
 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApıKey);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", APIKEY);
 
                 var RequestData = new
                 {

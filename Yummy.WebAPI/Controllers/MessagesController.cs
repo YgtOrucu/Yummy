@@ -24,7 +24,7 @@ namespace Yummy.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> MessageList()
         {
-            var values = await _yummyContext.Messages.ToListAsync();
+            var values = await _yummyContext.Messages.OrderByDescending(x=>x.MessageDate).ToListAsync();
             return Ok(_mapper.Map<List<ResultMessageDto>>(values));
         }
         [HttpPost]
