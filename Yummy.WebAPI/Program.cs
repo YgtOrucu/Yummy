@@ -15,7 +15,7 @@ builder.Services.AddDbContext<YummyContext>(option => option.UseSqlServer(connec
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<MarkerValidation>();
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(opt => opt.AddMaps(typeof(Program)));
 builder.Services.AddIdentity<AppUser, AppRole>(opt =>
 {
     opt.Password.RequiredLength = 6;
